@@ -1,0 +1,23 @@
+body {
+  background-color: #020826;
+  color: white;
+}
+
+.weather--container,
+.weather--wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.weather--today--wrapper {
+  flex-basis: 30%;
+}
+
+.others--weather--wrapper {
+  flex-basis: 70%;
+}
+
+
+/*# sourceMappingURL=/styles.8986bff4.css.map */
