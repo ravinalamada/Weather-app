@@ -6,6 +6,7 @@ function weather() {
   const {state, dispatch} = useContext(Context);
   const {weather, loading} = state;
   const weatherToday = !loading && weather && weather.consolidated_weather[0];
+  console.log(weatherToday);
   const date = !loading && weatherToday && weatherToday.applicable_date;
   const dateToday = !loading && date && date.toLocaleString('en-us', { dateToday: 'short' })
 
@@ -50,6 +51,27 @@ function weather() {
                     </div>
                   ))}
             </div>
+              <h2>Today's Highlights</h2>
+              <div>
+                <div>
+                  <h3>Wind status</h3>
+                  <h4></h4>
+                </div>
+                <div>
+                  <h3>Humidity</h3>
+                  <h4></h4>
+                  <progress>
+                  </progress>
+                </div>
+                <div>
+                  <h3>Visibility</h3>
+                  <h4></h4>
+                </div>
+                <div>
+                  <h3>Air Pressure</h3>
+                  <h4></h4>
+                </div>
+              </div>
             </div>
           </div>
         }

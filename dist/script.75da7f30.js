@@ -35808,6 +35808,7 @@ function weather() {
     loading
   } = state;
   const weatherToday = !loading && weather && weather.consolidated_weather[0];
+  console.log(weatherToday);
   const date = !loading && weatherToday && weatherToday.applicable_date;
   const dateToday = !loading && date && date.toLocaleString('en-us', {
     dateToday: 'short'
@@ -35842,7 +35843,7 @@ function weather() {
     alt: "photo"
   }), /*#__PURE__*/_react.default.createElement("div", {
     className: "temp"
-  }, /*#__PURE__*/_react.default.createElement("p", null, Math.floor(weather.max_temp), " C"), /*#__PURE__*/_react.default.createElement("p", null, Math.floor(weather.min_temp), " C")))))))));
+  }, /*#__PURE__*/_react.default.createElement("p", null, Math.floor(weather.max_temp), " C"), /*#__PURE__*/_react.default.createElement("p", null, Math.floor(weather.min_temp), " C")))))), /*#__PURE__*/_react.default.createElement("h2", null, "Today's Highlights"), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h3", null, "Wind status"), /*#__PURE__*/_react.default.createElement("h4", null)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h3", null, "Humidity"), /*#__PURE__*/_react.default.createElement("h4", null), /*#__PURE__*/_react.default.createElement("progress", null)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h3", null, "Visibility"), /*#__PURE__*/_react.default.createElement("h4", null)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h3", null, "Air Pressure"), /*#__PURE__*/_react.default.createElement("h4", null))))));
 }
 
 var _default = weather;
@@ -35915,7 +35916,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52661" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53481" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

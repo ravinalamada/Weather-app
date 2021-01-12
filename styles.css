@@ -4,7 +4,8 @@ body {
 }
 
 .weather--container,
-.weather--wrapper {
+.weather--wrapper,
+.temp {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -18,3 +19,4 @@ body {
 .others--weather--wrapper {
   flex-basis: 70%;
 }
+
