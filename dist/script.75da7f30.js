@@ -35698,7 +35698,9 @@ var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // The API that I am going to fetch
-const endpoint = "https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/44418/";
+const API_CORS = "https://cors-anywhere.herokuapp.com/";
+const endpoint1 = "https://www.metaweather.com/api/location/search/?lattlong=36.96,-122.02";
+const endpoint2 = "https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/2488042/";
 
 function useReduce() {
   const [state, dispatch] = (0, _react.useReducer)((state, action) => {
@@ -35720,7 +35722,7 @@ function useReduce() {
   }); // Fetch the jobs data
 
   async function getWeather() {
-    const fetchWeather = await (0, _axios.default)(endpoint);
+    const fetchWeather = await (0, _axios.default)(API_CORS + endpoint2);
     dispatch({
       type: "FETCH_WEATHER",
       weather: fetchWeather.data
@@ -35809,15 +35811,19 @@ function weather() {
   } = state;
   const weatherToday = !loading && weather && weather.consolidated_weather[0];
   console.log(weatherToday);
-  const date = !loading && weatherToday && weatherToday.applicable_date;
+  const date = new Date(!loading && weatherToday && weatherToday.applicable_date);
   const dateToday = !loading && date && date.toLocaleString('en-us', {
-    dateToday: 'short'
+    day: 'numeric',
+    weekday: 'short',
+    month: 'short'
   }); // Gets date tommorow
 
   const weatherTom = !loading && weather && weather.consolidated_weather[1];
   const date2 = !loading && weatherTom && weatherTom.applicable_date;
   const dateTom = !loading && date2 && date2.toLocaleString('en-us', {
-    dateTom: 'short'
+    day: 'numeric',
+    weekday: 'short',
+    month: 'short'
   });
   const weather3 = !loading && weather && weather.consolidated_weather[2];
   const weather4 = !loading && weather && weather.consolidated_weather[3];
@@ -35843,7 +35849,23 @@ function weather() {
     alt: "photo"
   }), /*#__PURE__*/_react.default.createElement("div", {
     className: "temp"
-  }, /*#__PURE__*/_react.default.createElement("p", null, Math.floor(weather.max_temp), " C"), /*#__PURE__*/_react.default.createElement("p", null, Math.floor(weather.min_temp), " C")))))), /*#__PURE__*/_react.default.createElement("h2", null, "Today's Highlights"), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h3", null, "Wind status"), /*#__PURE__*/_react.default.createElement("h4", null)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h3", null, "Humidity"), /*#__PURE__*/_react.default.createElement("h4", null), /*#__PURE__*/_react.default.createElement("progress", null)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h3", null, "Visibility"), /*#__PURE__*/_react.default.createElement("h4", null)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h3", null, "Air Pressure"), /*#__PURE__*/_react.default.createElement("h4", null))))));
+  }, /*#__PURE__*/_react.default.createElement("p", null, Math.floor(weather.max_temp), " C"), /*#__PURE__*/_react.default.createElement("p", null, Math.floor(weather.min_temp), " C")))))), /*#__PURE__*/_react.default.createElement("h2", null, "Today's Highlights"), /*#__PURE__*/_react.default.createElement("div", {
+    className: "weather--highlight--container"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "weather--highlight--wrapper"
+  }, /*#__PURE__*/_react.default.createElement("h3", null, "Wind status"), /*#__PURE__*/_react.default.createElement("h4", null, weatherToday.wind_speed.toFixed(2), " mph"), /*#__PURE__*/_react.default.createElement("h4", null, weatherToday.wind_direction_compass)), /*#__PURE__*/_react.default.createElement("div", {
+    className: "weather--highlight--wrapper"
+  }, /*#__PURE__*/_react.default.createElement("h3", null, "Humidity"), /*#__PURE__*/_react.default.createElement("h4", null, "79%"), /*#__PURE__*/_react.default.createElement("div", {
+    className: "progress--wrapper"
+  }, /*#__PURE__*/_react.default.createElement("label", null, "01"), /*#__PURE__*/_react.default.createElement("label", null, "50"), /*#__PURE__*/_react.default.createElement("label", null, "100%")), /*#__PURE__*/_react.default.createElement("progress", {
+    id: "humidity",
+    value: weatherToday.humidity,
+    max: "100"
+  })), /*#__PURE__*/_react.default.createElement("div", {
+    className: "weather--highlight--wrapper"
+  }, /*#__PURE__*/_react.default.createElement("h3", null, "Visibility"), /*#__PURE__*/_react.default.createElement("h4", null, weatherToday.visibility.toFixed(2), " miles")), /*#__PURE__*/_react.default.createElement("div", {
+    className: "weather--highlight--wrapper"
+  }, /*#__PURE__*/_react.default.createElement("h3", null, "Air Pressure"), /*#__PURE__*/_react.default.createElement("h4", null, weatherToday.air_pressure, " mbar"))))));
 }
 
 var _default = weather;
@@ -35916,7 +35938,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53481" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55854" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

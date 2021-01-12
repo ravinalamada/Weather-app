@@ -5,11 +5,23 @@ body {
 
 .weather--container,
 .weather--wrapper,
-.temp {
+.temp,
+.progress--wrapper,
+.weather--highlight--container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+.weather--highlight--container,
+.progress--wrapper {
+  text-align: center;
+}
+
+.weather--highlight--wrapper {
+  flex-basis: 50%;
+  background: #1E213A;
 }
 
 .weather--today--wrapper {
@@ -20,3 +32,6 @@ body {
   flex-basis: 70%;
 }
 
+.progress--wrapper {
+  max-width: 50%;
+}

@@ -7,13 +7,13 @@ function weather() {
   const {weather, loading} = state;
   const weatherToday = !loading && weather && weather.consolidated_weather[0];
   console.log(weatherToday);
-  const date = new Date(!loading && weatherToday && weatherToday.applicable_date);
-  const dateToday = !loading && date && date.toLocaleString('en-us', { day: 'numeric', weekday: 'short', month: 'short' })
+  const date = !loading && weatherToday && weatherToday.applicable_date;
+  const dateToday = !loading && date && date.toLocaleString('en-us', { dateToday: 'short' })
 
   // Gets date tommorow
   const weatherTom = !loading && weather && weather.consolidated_weather[1];
   const date2 = !loading && weatherTom && weatherTom.applicable_date;
-  const dateTom = !loading && date2 && date2.toLocaleString('en-us', { day: 'numeric', weekday: 'short', month: 'short' })
+  const dateTom = !loading && date2 && date2.toLocaleString('en-us', { dateTom: 'short' })
   const weather3 = !loading && weather && weather.consolidated_weather[2];
   const weather4 = !loading && weather && weather.consolidated_weather[3];
   const weather5 = !loading && weather && weather.consolidated_weather[4];
@@ -42,7 +42,7 @@ function weather() {
                     <div key={weather.id}>
                       <div>
                         <p>{weather.applicable_date === dateTom ? 'Tommorow' : weather.applicable_date}</p>
-                        <img src="" alt="photo"/>
+                        <img src="/static/img/weather/sn.svg" alt="photo"/>
                         <div className="temp">
                           <p>{Math.floor(weather.max_temp)} C</p>
                           <p>{Math.floor(weather.min_temp)} C</p>
