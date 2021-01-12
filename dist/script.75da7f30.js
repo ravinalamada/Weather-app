@@ -33861,9 +33861,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function Header() {
   return /*#__PURE__*/_react.default.createElement("header", null, /*#__PURE__*/_react.default.createElement("h1", null, "Weather App"), /*#__PURE__*/_react.default.createElement("form", {
@@ -35698,11 +35700,15 @@ var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // The API that I am going to fetch
-const API_CORS = "https://cors-anywhere.herokuapp.com/";
-const endpoint1 = "https://www.metaweather.com/api/location/search/?lattlong=36.96,-122.02";
-const endpoint2 = "https://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/2488042/";
+const API_CORS = "https://cors-anywhere.herokuapp.com/"; // const endpoint1 = "https://www.metaweather.com/api/location/search/?lattlong=36.96,-122.02";
+
+const endpoint2 = "https://www.metaweather.com/api/location/";
 
 function useReduce() {
+  const [location, setLocation] = (0, _react.useState)('london'); // Default location
+
+  const [woeid, setWoeid] = (0, _react.useState)('44418'); // Default woeid
+
   const [state, dispatch] = (0, _react.useReducer)((state, action) => {
     switch (action.type) {
       case "FETCH_WEATHER":
@@ -35722,7 +35728,7 @@ function useReduce() {
   }); // Fetch the jobs data
 
   async function getWeather() {
-    const fetchWeather = await (0, _axios.default)(API_CORS + endpoint2);
+    const fetchWeather = await (0, _axios.default)(API_CORS + endpoint2 + woeid + '/');
     dispatch({
       type: "FETCH_WEATHER",
       weather: fetchWeather.data
@@ -35830,7 +35836,16 @@ function weather() {
   const weather5 = !loading && weather && weather.consolidated_weather[4];
   const weather6 = !loading && weather && weather.consolidated_weather[5]; // Put all of the weathers which are not today and map them after
 
-  const weathers = [weatherTom, weather3, weather4, weather5, weather6];
+  const weathers = [weatherTom, weather3, weather4, weather5, weather6]; // Dispaly images
+  // let X
+  // const weatherImg = !loading && weather && weather.consolidated_weather.map(weather => weather.weather_state_name);
+  // console.log(weatherImg);
+  // const iconsImages = loading && weather.weatherImg.map(icon => {
+  //   if(icon === "Light Rain") {
+  //     let X = 'lr'
+  //   }
+  // })
+
   return /*#__PURE__*/_react.default.createElement("section", null, !loading && weatherToday && /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--container"
   }, /*#__PURE__*/_react.default.createElement("div", {
@@ -35838,7 +35853,7 @@ function weather() {
   }, /*#__PURE__*/_react.default.createElement("img", {
     src: "",
     alt: "photo"
-  }), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("p", null), /*#__PURE__*/_react.default.createElement("p", null, weatherToday.weather_state_name), /*#__PURE__*/_react.default.createElement("p", null, "Today: ", dateToday), /*#__PURE__*/_react.default.createElement("h3", null, weather.title))), /*#__PURE__*/_react.default.createElement("div", {
+  }), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h3", null, Math.floor(weatherToday.the_temp), " C"), /*#__PURE__*/_react.default.createElement("p", null, weatherToday.weather_state_name), /*#__PURE__*/_react.default.createElement("p", null, "Today: ", dateToday), /*#__PURE__*/_react.default.createElement("h3", null, weather.title))), /*#__PURE__*/_react.default.createElement("div", {
     className: "others--weather--wrapper"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--wrapper"
@@ -35938,7 +35953,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55854" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49791" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

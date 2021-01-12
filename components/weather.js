@@ -22,6 +22,16 @@ function weather() {
   // Put all of the weathers which are not today and map them after
   const weathers = [weatherTom, weather3, weather4, weather5, weather6];
 
+  // Dispaly images
+  // let X
+  // const weatherImg = !loading && weather && weather.consolidated_weather.map(weather => weather.weather_state_name);
+  // console.log(weatherImg);
+  // const iconsImages = loading && weather.weatherImg.map(icon => {
+  //   if(icon === "Light Rain") {
+  //     let X = 'lr'
+  //   }
+  // })
+
   return (
     <section>
       {
@@ -30,7 +40,7 @@ function weather() {
             <div className="weather--today--wrapper">
               <img src="" alt="photo"/>
               <div>
-                <p>{}</p>
+                <h3>{Math.floor(weatherToday.the_temp)} C</h3>
                 <p>{weatherToday.weather_state_name}</p>
                 <p>Today: {dateToday}</p>
                 <h3>{weather.title}</h3>
