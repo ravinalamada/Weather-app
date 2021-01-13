@@ -1,39 +1,90 @@
 body {
   background-color: #020826;
-  color: white;
+  color: #E7E7EB;
+  font-size: 16px;
 }
 
-.weather--container,
 .weather--wrapper,
-.temp,
-.progress--wrapper,
-.weather--highlight--container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.weather--highlight--container,
-.progress--wrapper {
-  text-align: center;
-}
-
-.weather--highlight--wrapper {
-  flex-basis: 50%;
+.weather--highlight--wrapper,
+.weather--today--wrapper {
   background: #1E213A;
 }
 
-.weather--today--wrapper {
-  flex-basis: 30%;
+.weather--wrapper {
+  padding-left: 22px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-right: 22px;
+  margin-bottom: 1rem;
 }
 
-.others--weather--wrapper {
-  flex-basis: 70%;
+.weather--wrapper--wrap {
+  text-align: center;
 }
 
-.progress--wrapper {
-  max-width: 50%;
+@media (min-width: 800px) {
+
+  .weather--container,
+  .weathers--wrapper,
+  .temp,
+  .progress--wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .weather--container,
+  .weather--highlight--container {
+    display: grid;
+  }
+
+  .weather--container {
+    grid-template-columns: 25% 1fr;
+    column-gap: 100px;
+  }
+
+  .weather--highlight--container{
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    row-gap: 48px;
+    column-gap: 48px;
+    text-align: center;
+  }
+
+  .progress--wrapper {
+    text-align: center;
+  }
+
+  .weather--highlight--wrapper {
+    flex-basis: 50%;
+    background: #1E213A;
+  }
+
+  img {
+    width: 30%;
+  }
+
+  .weather--today--wrapper {
+    flex-basis: 30%;
+  }
+
+  .others--weather--wrapper {
+    flex-basis: 70%;
+  }
+
+  .progress--wrapper {
+    max-width: 50%;
+  }
+
+  .heading2 {
+    font-size: 24px;
+  }
+
+  .heading4 {
+    font-size: 64px;
+  }
+
 }
 
 

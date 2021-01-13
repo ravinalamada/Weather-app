@@ -1,43 +1,59 @@
-import {useReducer, useEffect, useState} from 'react';
-import axios from 'axios';
+// import {useReducer, useEffect, useState} from 'react';
+// import axios from 'axios';
 
-// The API that I am going to fetch
-const API_CORS = "https://cors-anywhere.herokuapp.com/";
-// const endpoint1 = "https://www.metaweather.com/api/location/search/?lattlong=36.96,-122.02";
-const endpoint2 = "https://www.metaweather.com/api/location/";
+// // cors API
+// const CORS_API = 'https://cors-anywhere.herokuapp.com/';
 
-function useReduce() {
-  const [location, setLocation] = useState('london');// Default location
-  const [woeid, setWoeid] = useState('44418'); // Default woeid
-  const [state, dispatch] = useReducer((state, action) => {
-      switch (action.type) {
-        case "FETCH_WEATHER": {
-          return {...state, loading: false, weather: action.weather}
-        }
-        default:
-          return state
-       }
-     }, {
-      loading: true,
-      weather: [],
-    })
+// // The API that I am going to fetch
+// function useReduce() {
+//   const [location, setLocation] = useState('london');// Default location
+//   const [woeid, setWoeid] = useState('44418'); // Default woeid
+//   const [state, dispatch] = useReducer((state, action) => {
+//       switch (action.type) {
+//         case "FETCH_WEATHER": {
+//           return {...state, loading: false, weather: action.weather}
+//         }
+//         case "FECTH_WEATHER_DATA": {
+//           return {...state, loading: false, weather: action.weather}
+//         }
+//         default:
+//           return state
+//        }
+//      }, {
+//       loading: true,
+//       weather: [],
+//     })
 
-    // Fetch the jobs data
-    async function getWeather() {
-      const fetchWeather = await axios(API_CORS + endpoint2 + woeid + '/');
-      dispatch({type:"FETCH_WEATHER", weather: fetchWeather.data})
-    }
+//     // Fetch the jobs data
+//     async function getWeather() {
+//       const LOC_URL = `${CORS_API}https://www.metaweather.com/api/location/search/?query=${location}`
+//       const fetchWeatherLoc = await axios(LOC_URL);
+//       dispatch({type:"FETCH_WEATHER", weather: fetchWeatherLoc.data})
+//       if(fetchWeatherLoc.length) {
+//         console.log('kjkjwh');
+//         const API_URL = `${CORS_API}https://www.metaweather.com/api/location/${fetchWeatherLoc[0].woeid}/`;
+//         const weatherData = await axios(API_URL);
+//         console.log(weatherData);
+//         dispatch({type: "FECTH_WEATHER_DATA", weather: weatherData.data})
+//       }
+//     }
 
-    // This dispatched the type of fetch jobs
-     useEffect(() => {
-       setTimeout(() => {
-         dispatch({type:"FETCH_WEATHER"})
-         getWeather()
-       }, 500)
-     }, [])
+//     function getWeatherData() {
 
-     // return the state and dispatch that I am going to use
-    return {state, dispatch}
-}
+//     }
 
-export default useReduce
+//     // This dispatched the type of fetch jobs
+//      useEffect(() => {
+//        setTimeout(() => {
+//          dispatch({type:"FETCH_WEATHER"})
+//          dispatch({type: "FECTH_WEATHER_DATA"})
+//          getWeather()
+//        }, 500)
+//      }, [])
+
+//     console.log(state);
+//      // return the state and dispatch that I am going to use
+//     return {state, dispatch}
+// }
+
+// export default useReduce
