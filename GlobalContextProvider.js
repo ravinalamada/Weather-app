@@ -10,6 +10,7 @@ function GlobalContextProvider({children}) {
   const [location, setLocation] = useState('london');// Default location
   const [woeid, setWoeid] = useState({}); // Default woeid
   const [isLoading, setIsLoading] = useState(true); // Loading the page
+  const [isClicked, setIsClicked] = useState(false);
 
   // Fetch the weather data
   async function getWeather() {
@@ -45,12 +46,21 @@ function GlobalContextProvider({children}) {
     getWeather();
   }
 
+  // Show the pannel
+  function handleClick() {
+    setIsClicked(true)
+    console.log('WroooS');
+  }
+
   return (
     <Context.Provider value={{
       location,
       woeid,
       isLoading,
+      isClicked,
       submitWeather,
+      setLocation,
+      handleClick,
     }}>
        {children}
     </Context.Provider>

@@ -35,7 +35,7 @@ function weather() {
                 <h3 className="heading3">{woeid.title}</h3>
               </div>
             </div>
-              <div className="others--weather--wrapper">
+            <div className="others--weather--wrapper">
                 <div className="weathers--wrapper">
                   {!isLoading && weathers && weathers.map(weather => (
                       <div key={weather.id} className="weather--wrapper">
@@ -78,7 +78,7 @@ function weather() {
                 </div>
               </div>
             </div>
-           </div>
+          </div>
         }
     </section>
   )

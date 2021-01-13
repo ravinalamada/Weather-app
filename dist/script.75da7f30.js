@@ -33881,7 +33881,8 @@ function GlobalContextProvider({
   const [woeid, setWoeid] = (0, _react.useState)({}); // Default woeid
 
   const [isLoading, setIsLoading] = (0, _react.useState)(true); // Loading the page
-  // Fetch the weather data
+
+  const [isClicked, setIsClicked] = (0, _react.useState)(false); // Fetch the weather data
 
   async function getWeather() {
     // Fetch weather location
@@ -33910,6 +33911,12 @@ function GlobalContextProvider({
   function submitWeather(e) {
     e.preventDefault();
     getWeather();
+  } // Show the pannel
+
+
+  function handleClick() {
+    setIsClicked(true);
+    console.log('WroooS');
   }
 
   return /*#__PURE__*/_react.default.createElement(Context.Provider, {
@@ -33917,7 +33924,10 @@ function GlobalContextProvider({
       location,
       woeid,
       isLoading,
-      submitWeather
+      isClicked,
+      submitWeather,
+      setLocation,
+      handleClick
     }
   }, children);
 }
@@ -33939,27 +33949,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function Header() {
   const {
-    woeid,
-    isLoading,
-    submitWeather
+    handleClick
   } = (0, _react.useContext)(_GlobalContextProvider.Context);
-  const [searchWeather, setSearchWeather] = (0, _react.useState)('');
-  return /*#__PURE__*/_react.default.createElement("header", null, /*#__PURE__*/_react.default.createElement("h1", null, "Weather App"), /*#__PURE__*/_react.default.createElement("form", {
-    className: "form",
-    onSubmit: submitWeather
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "form--container"
-  }, /*#__PURE__*/_react.default.createElement("fieldset", {
-    className: "form__fieldset"
-  }, /*#__PURE__*/_react.default.createElement("label", null), /*#__PURE__*/_react.default.createElement("input", {
-    type: "search",
-    className: "form__input",
-    placeholder: "Search for places",
-    value: searchWeather,
-    onChange: e => setSearchWeather(e.target.value)
-  })), /*#__PURE__*/_react.default.createElement("button", {
+  return /*#__PURE__*/_react.default.createElement("header", null, /*#__PURE__*/_react.default.createElement("h1", null, "Weather App"), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
+    onClick: handleClick
+  }, "Search for places"), /*#__PURE__*/_react.default.createElement("button", {
     className: "form__btn"
-  }, "search"))));
+  }, "search")));
 }
 
 var _default = Header;
@@ -34143,7 +34139,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55710" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63996" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
