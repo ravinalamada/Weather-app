@@ -5,11 +5,10 @@ function Header() {
   const {handleClick} = useContext(Context);
 
   return (
-    <header>
-      <h1>Weather App</h1>
-      <div>
-        <button onClick={handleClick}>Search for places</button>
-        <button className="form__btn">search</button>
+    <header className="header">
+      <div className="header--container">
+        <button className="header__btn--search" onClick={handleClick}>Search for places</button>
+        <button className="header__btn"></button>
       </div>
     </header>
   )

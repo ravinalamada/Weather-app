@@ -8,9 +8,11 @@ const CORS_API = 'https://cors-anywhere.herokuapp.com/';
 // This will provide data to all the consumer
 function GlobalContextProvider({children}) {
   const [location, setLocation] = useState('london');// Default location
+  const [query, setQuery] = useState([])
   const [woeid, setWoeid] = useState({}); // Default woeid
   const [isLoading, setIsLoading] = useState(true); // Loading the page
   const [isClicked, setIsClicked] = useState(false);
+  const [isCeluis, setIsCeluis] = useState(false);
 
   // Fetch the weather data
   async function getWeather() {
@@ -19,7 +21,7 @@ function GlobalContextProvider({children}) {
     const API_URL_LOC = `${CORS_API}https://www.metaweather.com/api/location/search/?query=${location}`
       const fetchWeatherLocData = await fetch(API_URL_LOC);
       const data = await fetchWeatherLocData.json()
-      setLocation(data)
+      setQuery(data)
 
       // Check if there something inside of the data location
       if(data.length) {
@@ -44,13 +46,22 @@ function GlobalContextProvider({children}) {
   function submitWeather(e) {
     e.preventDefault();
     getWeather();
+    setIsClicked(false)
   }
 
   // Show the pannel
   function handleClick() {
     setIsClicked(true)
-    console.log('WroooS');
   }
+
+     // Toggle the units
+     function convertUnitCeluisIntoFar(){
+      setIsCeluis(true)
+    }
+
+    function convertFarUnitIntoCeluis() {
+      setIsCeluis(false)
+    }
 
   return (
     <Context.Provider value={{
@@ -58,6 +69,9 @@ function GlobalContextProvider({children}) {
       woeid,
       isLoading,
       isClicked,
+      isCeluis,
+      convertFarUnitIntoCeluis,
+      convertUnitCeluisIntoFar,
       submitWeather,
       setLocation,
       handleClick,

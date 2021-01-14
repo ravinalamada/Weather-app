@@ -1,0 +1,17 @@
+.heading2 {
+  margin-top: 52px;
+  margin-bottom: 32px;
+  margin-left: 21px;
+}
+
+.weather__btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #585676
+}
+
+.weather__btn:focus,
+.weather__btn:hover {
+  background: #E7E7EB
+}

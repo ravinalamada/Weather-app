@@ -1,0 +1,26 @@
+.header--container {
+  margin-left: 11px;
+  margin-right: 11px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.header__btn--search {
+  background: #6E707A;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding-top: 11px;
+  padding-left: 18px;
+  padding-bottom: 10px;
+  padding-right: 18px;
+  color: #E7E7EB;
+  border-color: transparent;
+}
+
+.header__btn {
+  background: rgba(110, 112, 122, 0.3);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border-color: transparent;
+}

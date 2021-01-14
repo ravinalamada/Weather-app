@@ -1,0 +1,24 @@
+body {
+  background-color: #020826;
+  color: #E7E7EB;
+  font-size: 16px;
+  overflow-y: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+fieldset,
+button {
+  border-color: transparent;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  width: 20%;
+}

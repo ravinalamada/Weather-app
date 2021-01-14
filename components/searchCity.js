@@ -1,14 +1,22 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {Context} from '../GlobalContextProvider';
 
 function searchCity() {
 
-  const {location, isLoading, isClicked, setLocation, submitWeather} = useContext(Context);
+  const {location, isClicked, setLocation, submitWeather} = useContext(Context);
+  const [isShowedCity, setIsShowedCity] = useState(false);
+
+  // Toggle the button that will show the city which are searched
+
+  function toggleButton(e) {
+    e.preventDefault();
+    setIsShowedCity(true);
+  }
 
   return (
-    <div>
+    <div className="search--weather--app">
       {isClicked &&
-        <form className="form" onSubmit={submitWeather}>
+        <form className="form" onSubmit={toggleButton}>
           <div className="form--container">
             <fieldset className="form__fieldset">
               <input type="search"
@@ -21,6 +29,9 @@ function searchCity() {
           </div>
         </form>
       }
+      <div>
+        {isShowedCity ? <button onClick={submitWeather}>{location}</button> : null}
+      </div>
     </div>
   )
 }

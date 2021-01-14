@@ -1,0 +1,41 @@
+.weather--today--container {
+  padding-top: 29px;
+  background: #1E213A;
+}
+
+.weather--today--wrapper {
+  text-align: center;
+  padding-top: 76px;
+  text-align: center;
+}
+
+.weather--name,
+.weather--date,
+.weather--city {
+  color: #A09FB1;
+}
+
+.weather--name {
+  font-size: 36px;
+}
+
+.weather--date
+.weather--city {
+  font-size: 18px;
+}
+
+@media (min-width: 800px) {
+
+  .weather--today--container {
+    height: 700px;
+    overflow-y: hidden;
+  }
+
+    .weather--temp {
+    font-size: 144px;
+    margin-top: 40px;
+    margin-bottom: 23px;
+  }
+
+}
+
