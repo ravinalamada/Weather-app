@@ -57,10 +57,12 @@
 .progress {
   background: #FFEC65;
   border-radius: 80px;
+  width: 71%;
 }
 
 .percentage {
   text-align: right;
+  width: 70%;
 }
 
 @media (min-width: 1125px) {

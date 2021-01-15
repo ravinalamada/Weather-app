@@ -70,7 +70,6 @@ img {
 
 
 
-
 .form {
   margin-top: 82px;
 }
@@ -288,10 +287,12 @@ img {
 .progress {
   background: #FFEC65;
   border-radius: 80px;
+  width: 71%;
 }
 
 .percentage {
   text-align: right;
+  width: 70%;
 }
 
 @media (min-width: 1125px) {
@@ -379,6 +380,7 @@ img {
 .loading {
   margin-top: 50%;
   font-size: 30px;
+  text-align: center;
 }
 
 @media (min-width: 1125px) {
