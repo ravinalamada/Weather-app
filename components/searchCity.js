@@ -3,11 +3,10 @@ import {Context} from '../GlobalContextProvider';
 
 function searchCity() {
 
-  const {location, isClicked, setLocation, submitWeather} = useContext(Context);
+  const {location, query, isClicked, setLocation, submitWeather} = useContext(Context);
   const [isShowedCity, setIsShowedCity] = useState(false);
 
   // Toggle the button that will show the city which are searched
-
   function toggleButton(e) {
     e.preventDefault();
     setIsShowedCity(true);
@@ -32,8 +31,15 @@ function searchCity() {
           </form>
         </>
       }
-      <div>
-        {isShowedCity ? <button onClick={submitWeather} className="btn--seacrh--city">{location}</button> : null}
+      <div className="cities--wrapper">
+        {isShowedCity && query !== [] && query?.map(loc => (
+          <button
+            key={loc.id}
+            onClick={submitWeather}
+            className="btn--seacrh--city">
+              {loc.title}
+            </button>
+        ))}
       </div>
     </div>
   )

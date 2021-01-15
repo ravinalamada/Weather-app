@@ -70,6 +70,7 @@ function GlobalContextProvider({children}) {
       isLoading,
       isClicked,
       isCeluis,
+      query,
       convertFarUnitIntoCeluis,
       convertUnitCeluisIntoFar,
       submitWeather,

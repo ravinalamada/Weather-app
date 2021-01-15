@@ -50,7 +50,10 @@ img {
   border-color: transparent;
 }
 
-
+.App--wrapper {
+  background: #1E213A;
+  padding-top: 18px;
+}
 
 @media (min-width: 1125px) {
 
@@ -75,7 +78,6 @@ img {
 .form--container {
   display: flex;
   justify-content: space-between;
-  /* flex-wrap: wrap; */
 }
 
 .form__fieldset {
@@ -120,6 +122,11 @@ img {
   margin-top: 20px;
 }
 
+.cities--wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .close--pannel:focus {
   background-color: transparent;
 }
@@ -145,9 +152,6 @@ img {
 
 
 
-.section--weaher--today {
-  background: #1E213A;
-}
 
 .weather--today--container {
   padding-top: 29px;
@@ -195,11 +199,22 @@ img {
   text-align: right;
 }
 
+.weather--temp--wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .weathers--wrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   row-gap: 26px;
   column-gap: 32px;
+}
+
+.weather--wrapper--contents {
+  padding-left: 18px;
+  padding-right: 18px;
 }
 
 @media (min-width: 1125px) {
@@ -224,10 +239,17 @@ img {
   justify-content: center;
 }
 
-.progress--wrapper {
+.progress--value {
   text-align: center;
   display: flex;
   justify-content: center;
+}
+
+.progress--wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .weather--speed--direction {
@@ -266,6 +288,10 @@ img {
 .progress {
   background: #FFEC65;
   border-radius: 80px;
+}
+
+.percentage {
+  text-align: right;
 }
 
 @media (min-width: 1125px) {
@@ -311,6 +337,7 @@ img {
   margin-top: 52px;
   margin-bottom: 32px;
   margin-left: 21px;
+  text-transform: capitalize;
 }
 
 .images {
@@ -358,6 +385,10 @@ img {
 
   .weather__heading3 {
     font-size: 1.875rem;
+  }
+
+  .heading2 {
+    font-size: 3rem;
   }
 
 }

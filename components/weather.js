@@ -1,7 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {Context} from '../GlobalContextProvider';
 import WeatherLoading from './weatherLoading';
-import WeatherToday from './weatherToday';
 
 function weather() {
 
@@ -17,14 +16,13 @@ function weather() {
 
     // Gets date tommorow
     const weatherTom = !isLoading && woeid && woeid.consolidated_weather && woeid.consolidated_weather[1];
-    const date2 = !isLoading && weatherTom && weatherTom.applicable_date;
-    const dateTom = !isLoading && date2 && date2.toLocaleString('en-us', { day: 'numeric', weekday: 'short', month: 'short' })
+    const dateTom = !isLoading && weatherTom && weatherTom.applicable_date;
     const weather3 = !isLoading && woeid && woeid.consolidated_weather && woeid.consolidated_weather[2];
     const weather4 = !isLoading && woeid && woeid.consolidated_weather && woeid.consolidated_weather[3];
     const weather5 = !isLoading && woeid && woeid.consolidated_weather && woeid.consolidated_weather[4];
     const weather6 = !isLoading && woeid && woeid.consolidated_weather && woeid.consolidated_weather[5];
 
-    // // Put all of the weathers which are not today and map them after
+    // Put all of the weathers which are not today and map them after
     const weathers = [weatherTom, weather3, weather4, weather5, weather6];
 
     return (
@@ -40,7 +38,7 @@ function weather() {
             <div className="weathers--wrapper">
               {!isLoading && weathers && weathers.map(weather => (
               <div key={weather.id} className="weather--wrapper--contents">
-                <p>{weather.applicable_date === dateTom ? 'Tommorow' : weather.applicable_date}</p>
+                <p>{weather.applicable_date === dateTom ? 'Tommorow' : new Date(weather.applicable_date).toLocaleDateString('en-us', { day: 'numeric', weekday: 'short', month: 'short' })}</p>
                 <img className="images" src={`https://www.metaweather.com//static/img/weather/${weather.weather_state_abbr}.svg`} alt="photo"/>
                 <div className="weather--temp--wrapper">
                   {isCeluis ? <p> {Math.floor((weather.max_temp) * 1.8 + 32)}  &deg;F</p>: <p>{Math.floor(weather.max_temp)}  &deg;C</p>}
@@ -65,14 +63,16 @@ function weather() {
                   <span className="weather--humidity">79</span>
                   <span className="weather--humidity--unit">%</span>
                 </div>
-              <div className="progress--wrapper">
+              <div className="progress--value">
                 <label>01</label>
                 <label>50</label>
                 <label>100</label>
               </div>
-              <progress className="progress" id="humidity" value={weatherToday.humidity} max="100">
-              </progress>
-              <span className="percentage">%</span>
+              <div className="progress--wrapper">
+                <progress className="progress" id="humidity" value={weatherToday.humidity} max="100">
+                </progress>
+                <span className="percentage">%</span>
+              </div>
             </div>
             <div className="weather--highlight--wrapper">
               <h3 className="weather__heading3">Visibility</h3>

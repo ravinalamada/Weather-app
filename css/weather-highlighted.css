@@ -8,10 +8,17 @@
   justify-content: center;
 }
 
-.progress--wrapper {
+.progress--value {
   text-align: center;
   display: flex;
   justify-content: center;
+}
+
+.progress--wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .weather--speed--direction {
@@ -50,6 +57,10 @@
 .progress {
   background: #FFEC65;
   border-radius: 80px;
+}
+
+.percentage {
+  text-align: right;
 }
 
 @media (min-width: 1125px) {

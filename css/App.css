@@ -1,4 +1,7 @@
-
+.App--wrapper {
+  background: #1E213A;
+  padding-top: 18px;
+}
 
 @media (min-width: 1125px) {
 
