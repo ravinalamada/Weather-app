@@ -1,17 +1,58 @@
+.section--container {
+  margin-right: 16px;
+}
+
 .heading2 {
   margin-top: 52px;
   margin-bottom: 32px;
   margin-left: 21px;
 }
 
+.images {
+  width: 60px;
+  height: 60px;
+}
+
 .weather__btn {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #585676
+  background: #585676;
 }
 
 .weather__btn:focus,
 .weather__btn:hover {
   background: #E7E7EB
+}
+
+.weather--wrapper--contents,
+.weather--highlight--wrapper {
+  background: #1E213A;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.toggle--bg--col {
+  background: #E7E7EB
+}
+
+.temp--units--container {
+  margin-bottom: 75px;
+}
+
+.weather__btn--celsuis {
+  margin-right: 12px;
+}
+
+.loading {
+  margin-top: 50%;
+  font-size: 30px;
+}
+
+@media (min-width: 1125px) {
+
+  .weather__heading3 {
+    font-size: 1.875rem;
+  }
+
 }

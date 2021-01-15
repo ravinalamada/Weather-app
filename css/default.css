@@ -2,7 +2,7 @@ body {
   background-color: #020826;
   color: #E7E7EB;
   font-size: 16px;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 }
 
 * {
@@ -20,5 +20,5 @@ fieldset {
 }
 
 img {
-  width: 20%;
+  width: 30%;
 }

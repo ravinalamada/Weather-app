@@ -1,4 +1,78 @@
+
+
 .form {
   margin-top: 82px;
-  margin-left: 47px;
 }
+
+.form--container {
+  display: flex;
+  justify-content: space-between;
+  /* flex-wrap: wrap; */
+}
+
+.form__fieldset {
+  flex-basis: calc(calc(calc(100% / 5) * 3) + 30px);
+}
+
+.form__btn {
+  flex-basis: calc(calc(100% / 4) - 12px);
+}
+
+.form__input {
+  width: 100%;
+  padding-left: 49px;
+}
+
+.form__input,
+.btn--seacrh--city {
+  border: 1px solid #E7E7EB;
+  box-sizing: border-box;
+  padding-top: 14px;
+  padding-bottom: 15px;
+  color: #616475;
+  background-color: transparent;
+}
+
+.form__btn {
+  background: #3C47E9;
+  color: white;
+  padding-top: 13px;
+  padding-left: 13px;
+  padding-right: 13px;
+  padding-bottom: 13px;
+}
+
+.close--pannel {
+  background-color: transparent;
+  text-align: right;
+  color: #E7E7EB;
+  font-size: 18px;
+  line-height: 17px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.close--pannel:focus {
+  background-color: transparent;
+}
+
+.btn--seacrh--city {
+  margin-top: 58px;
+  text-align: left;
+  padding-left: 12px;
+}
+
+@media (min-width: 1125px) {
+
+  .search--city {
+    margin-left: 47px;
+    margin-right: 46px;
+  }
+
+  .btn--seacrh--city {
+    width: 100%;
+  }
+
+}
+
+

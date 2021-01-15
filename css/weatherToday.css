@@ -1,3 +1,7 @@
+.section--weaher--today {
+  background: #1E213A;
+}
+
 .weather--today--container {
   padding-top: 29px;
   background: #1E213A;
@@ -24,7 +28,7 @@
   font-size: 18px;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1125px) {
 
   .weather--today--container {
     height: 700px;

@@ -28,20 +28,20 @@ function weather() {
     const weathers = [weatherTom, weather3, weather4, weather5, weather6];
 
     return (
-      <section>
+      <section className="section--container">
         <WeatherLoading />
         {
           !isLoading && weatherToday &&
           <div className="weathers--container">
             <div className="temp--units--container">
-              <button className="weather__btn" onClick={convertFarUnitIntoCeluis}>&deg;C</button>
-              <button className="weather__btn" onClick={convertUnitCeluisIntoFar}>&deg;F</button>
+              <button className= 'weather__btn weather__btn--celsuis' onClick={convertFarUnitIntoCeluis}>&deg;C</button>
+              <button className= 'weather__btn' onClick={convertUnitCeluisIntoFar}>&deg;F</button>
             </div>
             <div className="weathers--wrapper">
               {!isLoading && weathers && weathers.map(weather => (
               <div key={weather.id} className="weather--wrapper--contents">
                 <p>{weather.applicable_date === dateTom ? 'Tommorow' : weather.applicable_date}</p>
-                <img src={`https://www.metaweather.com//static/img/weather/${weather.weather_state_abbr}.svg`} alt="photo"/>
+                <img className="images" src={`https://www.metaweather.com//static/img/weather/${weather.weather_state_abbr}.svg`} alt="photo"/>
                 <div className="weather--temp--wrapper">
                   {isCeluis ? <p> {Math.floor((weather.max_temp) * 1.8 + 32)}  &deg;F</p>: <p>{Math.floor(weather.max_temp)}  &deg;C</p>}
                   {isCeluis ? <p> {Math.floor((weather.min_temp) * 1.8 + 32)}  &deg;F</p>: <p>{Math.floor(weather.min_temp)}  &deg;C</p>}
@@ -53,27 +53,40 @@ function weather() {
             <div className="weather--highlight--container">
               <div className="weather--highlight--wrapper">
                 <h3 className="weather__heading3">Wind status</h3>
-                <h4 className="weather--speed">{weatherToday.wind_speed.toFixed(2)} mph</h4>
-                <h4 className="weather--speed">{weatherToday.wind_direction_compass}</h4>
+                <div className="weather--speed--wrapper">
+                  <span className="weather--speed">{weatherToday.wind_speed.toFixed(2)}</span>
+                  <span className="weather--speed--unit">mph</span>
+                </div>
+                <h4 className="weather--speed--direction">{weatherToday.wind_direction_compass}</h4>
               </div>
               <div className="weather--highlight--wrapper">
                 <h3 className="weather__heading3">Humidity</h3>
-                <h4 className="weather--humidity">79%</h4>
+                <div className="weather--humidity--wrapper">
+                  <span className="weather--humidity">79</span>
+                  <span className="weather--humidity--unit">%</span>
+                </div>
               <div className="progress--wrapper">
                 <label>01</label>
                 <label>50</label>
-                <label>100%</label>
+                <label>100</label>
               </div>
-              <progress id="humidity" value={weatherToday.humidity} max="100">
+              <progress className="progress" id="humidity" value={weatherToday.humidity} max="100">
               </progress>
+              <span className="percentage">%</span>
             </div>
             <div className="weather--highlight--wrapper">
               <h3 className="weather__heading3">Visibility</h3>
-              <h4 className="weather--visibility">{weatherToday.visibility.toFixed(2)} miles</h4>
+              <div className="weather--visibility--wrapper">
+                <span className="weather--visibility">{weatherToday.visibility.toFixed(2)}</span>
+                <span className="weather--visibility--unit">miles</span>
+              </div>
             </div>
             <div className="weather--highlight--wrapper">
               <h3 className="weather__heading3">Air Pressure</h3>
-              <h4 className="weather--air--pressure">{weatherToday.air_pressure} mb</h4>
+              <div className="weather--air--pressure--wrapper">
+                <span className="weather--air--pressure">{weatherToday.air_pressure}</span>
+                <span className="weather--air--pressure--unit">mb</span>
+              </div>
             </div>
           </div>
         </div>

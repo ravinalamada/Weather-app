@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react';
 import {Context} from '../GlobalContextProvider';
 import SearchCity from './searchCity';
 import WeatherLoading from './weatherLoading';
-import Header from './Header';
 
 function weather() {
 
@@ -19,14 +18,13 @@ function weather() {
   const dateToday = !isLoading && date && date.toLocaleString('en-us', { day: 'numeric', weekday: 'short', month: 'short' })
 
   return (
-    <section>
+    <section className="section--weaher--today">
       <WeatherLoading />
       {
         !isLoading && weatherToday &&
           <div className="weather--container">
             {!isClicked ?
               <div className="weather--today--container">
-                <Header />
                <div className="weather--today--wrapper">
                  <img className="weather__img--today" src={`https://www.metaweather.com//static/img/weather/${weatherToday.weather_state_abbr}.svg`} alt="photo"/>
                  {isCeluis ? <h3 className="weather--temp"> {Math.floor((weatherToday.the_temp)* 1.8 + 32)}  &deg;F</h3>: <h3 className="weather--temp">{Math.floor(weatherToday.the_temp)} &deg;C</h3>}

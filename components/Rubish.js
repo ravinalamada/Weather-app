@@ -57,7 +57,7 @@ function weather() {
             <div className="weather--highlight--wrapper">
             <h3 className="heading3">Wind status</h3>
             <h4 className="heading4">{weatherToday.wind_speed.toFixed(2)} mph</h4>
-            <h4 className="heading4">{weatherToday.wind_direction_compass}</h4>
+            <h4 className="heading4"></h4>
             </div>
             <div className="weather--highlight--wrapper">
             <h3 className="heading3">Humidity</h3>

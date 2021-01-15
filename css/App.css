@@ -1,157 +1,15 @@
 
 
-@media (min-width: 600px) {
+@media (min-width: 1125px) {
 
   .App--container {
     display: grid;
-    grid-template-columns: 30% 1fr;
+    grid-template-columns: 25% 1fr;
     column-gap: 100px;
   }
 }
 
 
 
-/*
 
 
-.weather--container {
-  display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  row-gap: 40px;
-}
-
-.laoding-wrapper {
-  display: flex;
-  flex-direction: row;
-}
-
-.weather__img--today {
-  max-width: 40%;
-}
-
-.loading {
-  font-size: 40px;
-  margin-top: 40px;
-}
-
-
-
-.form--container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.form__fieldset,
-.form__btn {
-  border-color: transparent;
-  margin: 0;
-  padding: 0;
-}
-
-.form__input {
-  height: 100%;
-}
-
-.form__btn {
-  background-color: #3C47E9;
-  color: white;
-  padding-top: 14px;
-  padding-left: 19px;
-  padding-right: 15px;
-  padding-bottom: 14px;
-}
-
-.weather--wrapper,
-.weather--highlight--wrapper,
-.weather--today--container,
-.search--weather--app {
-  background: #1E213A;
-}
-
-.weather--highlight--wrapper {
-  text-align: center;
-  padding-top: 22px;
-  padding-bottom: 35px;
-  margin-bottom: 32px;
-}
-
-.weather--wrapper {
-  padding-left: 22px;
-  padding-top: 18px;
-  padding-bottom: 18px;
-  padding-right: 22px;
-  margin-bottom: 1rem;
-}
-
-
-
-
-
-
-
-
-
-
-@media (min-width: 800px) {
-
-  .weather--container,
-  .weathers--wrapper,
-  .temp,
-  .progress--wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-
-  .weather--container,
-  .weather--highlight--container {
-
-    display: grid;
-  }
-
-  .weather--container {
-
-  }
-
-  .weather--highlight--container{
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    row-gap: 48px;
-    column-gap: 48px;
-  }
-
-  .progress--wrapper {
-    text-align: center;
-  }
-
-  .weather--highlight--wrapper {
-    flex-basis: 50%;
-  }
-
-  img {
-    width: 30%;
-  }
-
-
-
-  .others--weather--wrapper {
-    height: 700px;
-    overflow-y: scroll;
-    flex-basis: 70%;
-  }
-
-  .progress--wrapper {
-    max-width: 50%;
-  }
-
-  .heading2 {
-    font-size: 24px;
-  }
-
-  .heading4 {
-    font-size: 64px;
-  }
-
-} */
