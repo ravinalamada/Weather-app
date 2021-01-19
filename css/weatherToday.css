@@ -25,14 +25,27 @@
   font-size: 18px;
 }
 
-.weather--city::before {
+.weaterTod--title--wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+  text-align: center;
+  justify-content: center;
+  margin-top: 32px;
+  padding-bottom: 52px;
+}
+
+.weather--city {
+  margin: 0;
+}
+
+/* .weather--city::before {
   content: '';
   display: block;
   background-image: url(../icons/location.svg);
   background-repeat: no-repeat;
   width: 40px;
   height: 40px;
-}
+} */
 
 @media (min-width: 1125px) {
 

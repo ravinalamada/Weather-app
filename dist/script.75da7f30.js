@@ -34099,9 +34099,22 @@ function weather() {
     className: "weather--name"
   }, weatherToday.weather_state_name), /*#__PURE__*/_react.default.createElement("p", {
     className: "weather--date"
-  }, "Today: ", dateToday), /*#__PURE__*/_react.default.createElement("h3", {
+  }, "Today: ", dateToday), /*#__PURE__*/_react.default.createElement("div", {
+    className: "weaterTod--title--wrapper"
+  }, /*#__PURE__*/_react.default.createElement("h3", {
     className: "heading3 weather--city"
-  }, woeid.title))) : /*#__PURE__*/_react.default.createElement(_searchCity.default, null)));
+  }, woeid.title), /*#__PURE__*/_react.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    height: "24",
+    viewBox: "0 0 24 24",
+    width: "24",
+    fill: "#88869D"
+  }, /*#__PURE__*/_react.default.createElement("path", {
+    d: "M0 0h24v24H0z",
+    fill: "none"
+  }), /*#__PURE__*/_react.default.createElement("path", {
+    d: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+  }))))) : /*#__PURE__*/_react.default.createElement(_searchCity.default, null)));
 }
 
 var _default = weather;
@@ -34361,7 +34374,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62008" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64903" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
