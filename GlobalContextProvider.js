@@ -26,7 +26,6 @@ function GlobalContextProvider({children}) {
       // Check if there something inside of the data location
       if(data.length) {
         setIsLoading(false);
-
         // Fetch the woeid data in order the get data details
         const API_URL_WOEID = `${CORS_API}https://www.metaweather.com/api/location/${data[0].woeid}/`;
         const fetchWeatherWoeid = await fetch(API_URL_WOEID);
@@ -40,7 +39,7 @@ function GlobalContextProvider({children}) {
     setTimeout(() => {
       getWeather()
     }, 500)
-  }, [])
+  }, [location])
 
   // Submit the data
   function submitWeather(e) {

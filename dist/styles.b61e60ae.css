@@ -74,6 +74,13 @@ img {
   margin-top: 82px;
 }
 
+.search--city {
+  padding-left: 18px;
+  padding-right: 18px;
+  padding-bottom: 30px;
+  margin-bottom: 40px;
+}
+
 .form--container {
   display: flex;
   justify-content: space-between;
@@ -138,11 +145,6 @@ img {
 
 @media (min-width: 1125px) {
 
-  .search--city {
-    margin-left: 47px;
-    margin-right: 46px;
-  }
-
   .btn--seacrh--city {
     width: 100%;
   }
@@ -178,12 +180,16 @@ img {
   font-size: 18px;
 }
 
-@media (min-width: 1125px) {
+.weather--city::before {
+  content: '';
+  display: block;
+  background-image: url(/location.68e4bdf6.svg);
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+}
 
-  .weather--today--container {
-    height: 700px;
-    overflow-y: hidden;
-  }
+@media (min-width: 1125px) {
 
     .weather--temp {
     font-size: 144px;

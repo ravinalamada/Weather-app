@@ -33908,7 +33908,7 @@ function GlobalContextProvider({
     setTimeout(() => {
       getWeather();
     }, 500);
-  }, []); // Submit the data
+  }, [location]); // Submit the data
 
   function submitWeather(e) {
     e.preventDefault();
@@ -34001,7 +34001,7 @@ function searchCity() {
     className: "cities--wrapper"
   }, isShowedCity && query !== [] && query?.map(loc => /*#__PURE__*/_react.default.createElement("button", {
     key: loc.id,
-    onClick: submitWeather,
+    onClick: () => setLocation(loc.title),
     className: "btn--seacrh--city"
   }, loc.title))));
 }
@@ -34361,7 +34361,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60690" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62008" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

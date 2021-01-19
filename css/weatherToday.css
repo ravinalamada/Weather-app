@@ -25,12 +25,16 @@
   font-size: 18px;
 }
 
-@media (min-width: 1125px) {
+.weather--city::before {
+  content: '';
+  display: block;
+  background-image: url(../icons/location.svg);
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+}
 
-  .weather--today--container {
-    height: 700px;
-    overflow-y: hidden;
-  }
+@media (min-width: 1125px) {
 
     .weather--temp {
     font-size: 144px;
