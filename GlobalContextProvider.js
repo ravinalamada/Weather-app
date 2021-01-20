@@ -45,7 +45,8 @@ function GlobalContextProvider({children}) {
   function submitWeather(e) {
     e.preventDefault();
     getWeather();
-    setIsClicked(false)
+    console.log(query);
+    setIsClicked(false);
   }
 
   // Show the pannel

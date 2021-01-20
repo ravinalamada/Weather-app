@@ -1,6 +1,9 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {Context} from '../GlobalContextProvider';
 import WeatherLoading from './weatherLoading';
+import IconsDir from '../direction-icons';
+
+console.log(IconsDir);
 
 function weather() {
 
@@ -55,7 +58,12 @@ function weather() {
                   <span className="weather--speed">{weatherToday.wind_speed.toFixed(2)}</span>
                   <span className="weather--speed--unit">mph</span>
                 </div>
-                <h4 className="weather--speed--direction">{weatherToday.wind_direction_compass}</h4>
+                <div className="weather--direction--wrapper">
+                  <h4 className="weather--speed--direction">{weatherToday.wind_direction_compass}</h4>
+                  <div className="weather--direction--icons--wrapper">
+                    {/* <svg style={transform:rotation(${})} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg> */}
+                  </div>
+                </div>
               </div>
               <div className="weather--highlight--wrapper">
                 <h3 className="weather__heading3">Humidity</h3>

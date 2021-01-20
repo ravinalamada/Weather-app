@@ -33913,6 +33913,7 @@ function GlobalContextProvider({
   function submitWeather(e) {
     e.preventDefault();
     getWeather();
+    console.log(query);
     setIsClicked(false);
   } // Show the pannel
 
@@ -34119,7 +34120,70 @@ function weather() {
 
 var _default = weather;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","../GlobalContextProvider":"GlobalContextProvider.js","./searchCity":"components/searchCity.js","./weatherLoading":"components/weatherLoading.js"}],"components/weather.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../GlobalContextProvider":"GlobalContextProvider.js","./searchCity":"components/searchCity.js","./weatherLoading":"components/weatherLoading.js"}],"direction-icons.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const Icons = [{
+  N: '0%'
+}, {
+  NBE: '11%'
+}, {
+  NNE: '23%'
+}, {
+  NEBN: '33%'
+}, {
+  NE: '45%'
+}, {
+  NEBE: '56%'
+}, {
+  ENE: '67%'
+}, {
+  EBN: '79%'
+}, {
+  E: '90%'
+}, {
+  EBS: '100%'
+}, {
+  ESE: '111%'
+}, {
+  SEBE: '123%'
+}, {
+  SE: '135%'
+}, {
+  SEBS: '145%'
+}, {
+  SSE: '157%'
+}, {
+  SEB: '159%'
+}, {
+  S: '180%'
+}, {
+  wss: '202%'
+}, {
+  WS: '225%'
+}, {
+  WSW: '249%'
+}, {
+  W: '270%'
+}, {
+  WWW: '292%'
+}, {
+  WN: '315%'
+}, {
+  WNN: '338%'
+}];
+var _default = Icons;
+exports.default = _default;
+},{"react":"node_modules/react/index.js"}],"components/weather.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34133,11 +34197,15 @@ var _GlobalContextProvider = require("../GlobalContextProvider");
 
 var _weatherLoading = _interopRequireDefault(require("./weatherLoading"));
 
+var _directionIcons = _interopRequireDefault(require("../direction-icons"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+console.log(_directionIcons.default);
 
 function weather() {
   const {
@@ -34199,9 +34267,13 @@ function weather() {
     className: "weather--speed"
   }, weatherToday.wind_speed.toFixed(2)), /*#__PURE__*/_react.default.createElement("span", {
     className: "weather--speed--unit"
-  }, "mph")), /*#__PURE__*/_react.default.createElement("h4", {
+  }, "mph")), /*#__PURE__*/_react.default.createElement("div", {
+    className: "weather--direction--wrapper"
+  }, /*#__PURE__*/_react.default.createElement("h4", {
     className: "weather--speed--direction"
-  }, weatherToday.wind_direction_compass)), /*#__PURE__*/_react.default.createElement("div", {
+  }, weatherToday.wind_direction_compass), /*#__PURE__*/_react.default.createElement("div", {
+    className: "weather--direction--icons--wrapper"
+  }))), /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--highlight--wrapper"
   }, /*#__PURE__*/_react.default.createElement("h3", {
     className: "weather__heading3"
@@ -34247,7 +34319,7 @@ function weather() {
 
 var _default = weather;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","../GlobalContextProvider":"GlobalContextProvider.js","./weatherLoading":"components/weatherLoading.js"}],"components/Header.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../GlobalContextProvider":"GlobalContextProvider.js","./weatherLoading":"components/weatherLoading.js","../direction-icons":"direction-icons.js"}],"components/Header.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34374,7 +34446,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64903" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51516" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
