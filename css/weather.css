@@ -13,21 +13,31 @@
   text-transform: capitalize;
 }
 
-.images {
-  width: 60px;
-  height: 60px;
+.weather__btn {
+  margin-right: 12px;
 }
 
-.weather__btn {
+.bg-dark-gray,
+.bg-light-gray {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #585676;
+  padding-top: 06px;
 }
 
-.weather__btn:focus,
-.weather__btn:hover {
-  background: #E7E7EB
+.bg-dark-gray {
+  background: #585676;
+  color: white;
+}
+
+.bg-light-gray {
+  --bg-opacity: 1;
+  background-color: rgba(247,250,252,var(--bg-opacity));
+  color: #110E3C;
 }
 
 .weather--wrapper--contents,

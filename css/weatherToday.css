@@ -10,6 +10,11 @@
   text-align: center;
 }
 
+.weather--temperature--wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .weather--name,
 .weather--date,
 .weather--city {
@@ -25,6 +30,11 @@
   font-size: 18px;
 }
 
+.weather--name,
+.weather--city {
+  font-weight: 600;
+}
+
 .weaterTod--title--wrapper {
   display: flex;
   flex-direction: row-reverse;
@@ -34,18 +44,27 @@
   padding-bottom: 52px;
 }
 
-.weather--city {
+.weather--name {
+  font-size: 36px;
+  line-height: 42px;
   margin: 0;
 }
 
-/* .weather--city::before {
-  content: '';
-  display: block;
-  background-image: url(../icons/location.svg);
-  background-repeat: no-repeat;
-  width: 40px;
-  height: 40px;
-} */
+.weather--name {
+  font-weight: 500;
+}
+
+.weather--temp {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 80px;
+}
+
+.weather--temp--unit {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+}
 
 @media (min-width: 1125px) {
 
@@ -53,6 +72,11 @@
     font-size: 144px;
     margin-top: 40px;
     margin-bottom: 23px;
+  }
+
+  .weather__img--today {
+    width: 202px;
+    height: 234px;
   }
 
 }

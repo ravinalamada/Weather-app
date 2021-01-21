@@ -20,6 +20,15 @@
   padding-right: 18px;
 }
 
+.date {
+  font-weight: 500;
+}
+
+.images {
+  width: 56.44px;
+  height: 62px;
+}
+
 @media (min-width: 1125px) {
 
   .weather--wrapper--contents {

@@ -1,8 +1,9 @@
 body {
   background-color: #020826;
   color: #E7E7EB;
+  font-family: Raleway;
+  font-style: normal;
   font-size: 16px;
-  /* overflow-y: hidden; */
 }
 
 * {
@@ -12,6 +13,11 @@ body {
 fieldset,
 button {
   border-color: transparent;
+}
+
+button,
+input {
+  cursor: pointer;
 }
 
 fieldset {

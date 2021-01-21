@@ -27,7 +27,18 @@ function weather() {
               <div className="weather--today--container">
                <div className="weather--today--wrapper">
                  <img className="weather__img--today" src={`https://www.metaweather.com//static/img/weather/${weatherToday.weather_state_abbr}.svg`} alt="photo"/>
-                 {isCeluis ? <h3 className="weather--temp"> {Math.floor((weatherToday.the_temp)* 1.8 + 32)}  &deg;F</h3>: <h3 className="weather--temp">{Math.floor(weatherToday.the_temp)} &deg;C</h3>}
+                 {isCeluis
+                  ?
+                    <div className="weather--temperature--wrapper">
+                      <p className="weather--temp">{Math.floor((weatherToday.the_temp)* 1.8 + 32)}</p>
+                      <span className="weather--temp--unit"> &deg;F</span>
+                    </div>
+                  :
+                    <div className="weather--temperature--wrapper">
+                      <p className="weather--temp">{Math.floor(weatherToday.the_temp)}</p>
+                      <span className="weather--temp--unit">&deg;C</span>
+                    </div>
+                 }
                  <p className="weather--name">{weatherToday.weather_state_name}</p>
                  <p className="weather--date">Today: {dateToday}</p>
                  <div className="weaterTod--title--wrapper">
