@@ -34273,7 +34273,19 @@ function weather() {
     className: "weather--speed--direction"
   }, weatherToday.wind_direction_compass), /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--direction--icons--wrapper"
-  }))), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("svg", {
+    className: `compass-icon compass-${weatherToday.wind_direction_compass}`,
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 24 24",
+    fill: "#E7E7EB",
+    width: "18px",
+    height: "18px"
+  }, /*#__PURE__*/_react.default.createElement("path", {
+    d: "M0 0h24v24H0z",
+    fill: "none"
+  }), /*#__PURE__*/_react.default.createElement("path", {
+    d: "M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"
+  }))))), /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--highlight--wrapper"
   }, /*#__PURE__*/_react.default.createElement("h3", {
     className: "weather__heading3"
@@ -34446,7 +34458,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51516" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65490" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
