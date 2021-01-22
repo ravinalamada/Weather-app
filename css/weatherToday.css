@@ -12,7 +12,11 @@
 
 .weather--temperature--wrapper {
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  align-items: baseline;
+  margin-top: 87px;
+  margin-bottom: 87px;
 }
 
 .weather--name,
@@ -64,14 +68,15 @@
   font-style: normal;
   font-weight: 500;
   font-size: 30px;
+  color: #A09FB1;
 }
 
 @media (min-width: 1125px) {
 
-    .weather--temp {
-    font-size: 144px;
-    margin-top: 40px;
-    margin-bottom: 23px;
+  .weather--temp {
+    font-size: 80px;
+    /* margin-top: 40px;
+    margin-bottom: 23px; */
   }
 
   .weather__img--today {

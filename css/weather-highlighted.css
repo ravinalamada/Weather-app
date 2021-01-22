@@ -3,7 +3,12 @@
   padding-bottom: 35px;
 }
 
-.weather--speed--wrapper,
+.weather__heading3 {
+  font-weight: 500;
+  color: #E7E7EB;
+}
+
+/* .weather--speed--wrapper, */
 .weather--visibility--wrapper,
 .weather--air--pressure--wrapper,
 .weather--humidity--wrapper,
@@ -27,6 +32,9 @@
 }
 
 .weather--speed--direction {
+  font-size: 14px;
+  line-height: 16px;
+  color: #E7E7EB;
   margin-top: 32px;
   margin-bottom: 0;
 }
@@ -42,6 +50,8 @@
   color: #E7E7EB;
 }
 
+.percentage,
+.weather__label,
 .weather--speed,
 .weather--humidity,
 .weather--visibility,
@@ -50,13 +60,25 @@
   font-weight: bold;
 }
 
+.weather--speed {
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.percentage,
+.weather__label {
+  font-size: 12px;
+  line-height: 14px;
+  color: #A09FB1;
+}
+
 .weather--speed--unit,
 .weather--humidity--unit,
 .weather--visibility--unit,
 .weather--air--pressure--unit {
   color: #A09FB1;
   font-size: 30px;
-  margin-left: 16px;
+  margin-left: 06px;
 }
 
 .progress[value] {
@@ -158,18 +180,14 @@
   .weather--humidity,
   .weather--visibility,
   .weather--air--pressure {
-    font-size: 4rem;
+    font-size: 64px;
   }
 
   .weather--speed--unit,
   .weather--humidity--unit,
   .weather--visibility--unit,
   .weather--air--pressure--unit {
-    font-size: 4rem;
-  }
-
-  .weather--speed--direction {
-    font-size: 1.875rem;
+    font-size: 40px;
   }
 
 }

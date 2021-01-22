@@ -7,6 +7,8 @@
 }
 
 .heading2 {
+  font-weight: 500;
+  color: #E7E7EB;
   margin-top: 52px;
   margin-bottom: 32px;
   margin-left: 21px;
@@ -67,12 +69,9 @@
 
 @media (min-width: 1125px) {
 
-  .weather__heading3 {
-    font-size: 1.875rem;
-  }
-
   .heading2 {
-    font-size: 3rem;
+    font-size: 24px;
+    line-height: 28px;
   }
 
 }

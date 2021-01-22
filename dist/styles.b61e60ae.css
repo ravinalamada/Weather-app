@@ -29,6 +29,10 @@ img {
   width: 30%;
 }
 
+.header {
+  padding-top: 42px;
+}
+
 .header--container {
   margin-left: 11px;
   margin-right: 11px;
@@ -58,7 +62,7 @@ img {
 
 .App--wrapper {
   background: #1E213A;
-  padding-top: 18px;
+  margin-top: -0.5rem;
 }
 
 @media (min-width: 1125px) {
@@ -173,7 +177,11 @@ img {
 
 .weather--temperature--wrapper {
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  align-items: baseline;
+  margin-top: 87px;
+  margin-bottom: 87px;
 }
 
 .weather--name,
@@ -225,14 +233,15 @@ img {
   font-style: normal;
   font-weight: 500;
   font-size: 30px;
+  color: #A09FB1;
 }
 
 @media (min-width: 1125px) {
 
-    .weather--temp {
-    font-size: 144px;
-    margin-top: 40px;
-    margin-bottom: 23px;
+  .weather--temp {
+    font-size: 80px;
+    /* margin-top: 40px;
+    margin-bottom: 23px; */
   }
 
   .weather__img--today {
@@ -291,7 +300,12 @@ img {
   padding-bottom: 35px;
 }
 
-.weather--speed--wrapper,
+.weather__heading3 {
+  font-weight: 500;
+  color: #E7E7EB;
+}
+
+/* .weather--speed--wrapper, */
 .weather--visibility--wrapper,
 .weather--air--pressure--wrapper,
 .weather--humidity--wrapper,
@@ -315,6 +329,9 @@ img {
 }
 
 .weather--speed--direction {
+  font-size: 14px;
+  line-height: 16px;
+  color: #E7E7EB;
   margin-top: 32px;
   margin-bottom: 0;
 }
@@ -330,6 +347,8 @@ img {
   color: #E7E7EB;
 }
 
+.percentage,
+.weather__label,
 .weather--speed,
 .weather--humidity,
 .weather--visibility,
@@ -338,13 +357,25 @@ img {
   font-weight: bold;
 }
 
+.weather--speed {
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.percentage,
+.weather__label {
+  font-size: 12px;
+  line-height: 14px;
+  color: #A09FB1;
+}
+
 .weather--speed--unit,
 .weather--humidity--unit,
 .weather--visibility--unit,
 .weather--air--pressure--unit {
   color: #A09FB1;
   font-size: 30px;
-  margin-left: 16px;
+  margin-left: 06px;
 }
 
 .progress[value] {
@@ -446,18 +477,14 @@ img {
   .weather--humidity,
   .weather--visibility,
   .weather--air--pressure {
-    font-size: 4rem;
+    font-size: 64px;
   }
 
   .weather--speed--unit,
   .weather--humidity--unit,
   .weather--visibility--unit,
   .weather--air--pressure--unit {
-    font-size: 4rem;
-  }
-
-  .weather--speed--direction {
-    font-size: 1.875rem;
+    font-size: 40px;
   }
 
 }
@@ -471,6 +498,8 @@ img {
 }
 
 .heading2 {
+  font-weight: 500;
+  color: #E7E7EB;
   margin-top: 52px;
   margin-bottom: 32px;
   margin-left: 21px;
@@ -531,12 +560,9 @@ img {
 
 @media (min-width: 1125px) {
 
-  .weather__heading3 {
-    font-size: 1.875rem;
-  }
-
   .heading2 {
-    font-size: 3rem;
+    font-size: 24px;
+    line-height: 28px;
   }
 
 }

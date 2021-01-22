@@ -70,9 +70,9 @@ function weather() {
                   <span className="weather--humidity--unit">%</span>
                 </div>
               <div className="progress--value">
-                <label>01</label>
-                <label>50</label>
-                <label>100</label>
+                <label className="weather__label">01</label>
+                <label className="weather__label">50</label>
+                <label className="weather__label">100</label>
               </div>
               <div className="progress--wrapper">
                 <progress className="progress" id="humidity" value={weatherToday.humidity} max="100">

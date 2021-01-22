@@ -10,7 +10,6 @@ function App() {
 
   return (
     <article className="App">
-      <h1>Weather App</h1>
       <div className="App--container">
         <div className="App--wrapper">
           {!isClicked && <Header />}

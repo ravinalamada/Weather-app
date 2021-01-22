@@ -35,7 +35,7 @@ function weather() {
                     </div>
                   :
                     <div className="weather--temperature--wrapper">
-                      <p className="weather--temp">{Math.floor(weatherToday.the_temp)}</p>
+                      <span className="weather--temp">{Math.floor(weatherToday.the_temp)}</span>
                       <span className="weather--temp--unit">&deg;C</span>
                     </div>
                  }

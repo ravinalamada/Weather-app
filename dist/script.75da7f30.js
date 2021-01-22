@@ -34100,7 +34100,7 @@ function weather() {
     className: "weather--temp--unit"
   }, " \xB0F")) : /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--temperature--wrapper"
-  }, /*#__PURE__*/_react.default.createElement("p", {
+  }, /*#__PURE__*/_react.default.createElement("span", {
     className: "weather--temp"
   }, Math.floor(weatherToday.the_temp)), /*#__PURE__*/_react.default.createElement("span", {
     className: "weather--temp--unit"
@@ -34244,7 +34244,13 @@ function weather() {
     className: "weather--humidity--unit"
   }, "%")), /*#__PURE__*/_react.default.createElement("div", {
     className: "progress--value"
-  }, /*#__PURE__*/_react.default.createElement("label", null, "01"), /*#__PURE__*/_react.default.createElement("label", null, "50"), /*#__PURE__*/_react.default.createElement("label", null, "100")), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("label", {
+    className: "weather__label"
+  }, "01"), /*#__PURE__*/_react.default.createElement("label", {
+    className: "weather__label"
+  }, "50"), /*#__PURE__*/_react.default.createElement("label", {
+    className: "weather__label"
+  }, "100")), /*#__PURE__*/_react.default.createElement("div", {
     className: "progress--wrapper"
   }, /*#__PURE__*/_react.default.createElement("progress", {
     className: "progress",
@@ -34352,7 +34358,7 @@ function App() {
   } = (0, _react.useContext)(_GlobalContextProvider.Context);
   return /*#__PURE__*/_react.default.createElement("article", {
     className: "App"
-  }, /*#__PURE__*/_react.default.createElement("h1", null, "Weather App"), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "App--container"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "App--wrapper"
@@ -34405,7 +34411,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60139" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64593" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
