@@ -9,7 +9,7 @@ const CORS_API = 'https://cors-anywhere.herokuapp.com/';
 function GlobalContextProvider({children}) {
   const [location, setLocation] = useState('london');// Default location
   const [query, setQuery] = useState([])
-  const [woeid, setWoeid] = useState({}); // Default woeid
+  // const [woeid, setWoeid] = useState({}); // Default woeid
   const [isLoading, setIsLoading] = useState(true); // Loading the page
   const [isClicked, setIsClicked] = useState(false);
   const [isCeluis, setIsCeluis] = useState(false);
@@ -25,9 +25,11 @@ function GlobalContextProvider({children}) {
 
       // Check if there something inside of the data location
       if(data.length) {
+        const findWoeid = data.find(data => data.woeid)
         setIsLoading(false);
+        // const findData = data.length !== '' && data
         // Fetch the woeid data in order the get data details
-        const API_URL_WOEID = `${CORS_API}https://www.metaweather.com/api/location/${data[0].woeid}/`;
+        const API_URL_WOEID = `${CORS_API}https://www.metaweather.com/api/location/${findWoeid.woeid}/`;
         const fetchWeatherWoeid = await fetch(API_URL_WOEID);
         const weatherData = await fetchWeatherWoeid.json()
         setWoeid(weatherData)
@@ -45,7 +47,6 @@ function GlobalContextProvider({children}) {
   function submitWeather(e) {
     e.preventDefault();
     getWeather();
-    console.log(query);
     setIsClicked(false);
   }
 

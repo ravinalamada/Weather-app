@@ -12,8 +12,10 @@ function App() {
     <article className="App">
       <div className="App--container">
         <div className="App--wrapper">
-          {!isClicked && <Header />}
-          <WeatherToday />
+          <div className="App--sub--wrapper">
+            {!isClicked && <Header />}
+            <WeatherToday />
+          </div>
         </div>
         <Weather />
       </div>

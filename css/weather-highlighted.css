@@ -60,11 +60,6 @@
   font-weight: bold;
 }
 
-.weather--speed {
-  font-size: 14px;
-  line-height: 16px;
-}
-
 .percentage,
 .weather__label {
   font-size: 12px;
@@ -81,11 +76,19 @@
   margin-left: 06px;
 }
 
-.progress[value] {
-  background-color: #FFEC65;
-  border-radius: 2px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+progress {
+  -webkit-appearance: none;
   width: 71%;
+}
+
+::-webkit-progress-bar {
+  background-color: lightgray;
+  border-radius: 80px;
+}
+
+::-webkit-progress-value {
+  background-color: #FFEC65;
+  border-radius: 80px;
 }
 
 .percentage {

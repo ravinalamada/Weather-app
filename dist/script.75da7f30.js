@@ -33878,8 +33878,7 @@ function GlobalContextProvider({
 }) {
   const [location, setLocation] = (0, _react.useState)('london'); // Default location
 
-  const [query, setQuery] = (0, _react.useState)([]);
-  const [woeid, setWoeid] = (0, _react.useState)({}); // Default woeid
+  const [query, setQuery] = (0, _react.useState)([]); // const [woeid, setWoeid] = useState({}); // Default woeid
 
   const [isLoading, setIsLoading] = (0, _react.useState)(true); // Loading the page
 
@@ -33894,9 +33893,11 @@ function GlobalContextProvider({
     setQuery(data); // Check if there something inside of the data location
 
     if (data.length) {
-      setIsLoading(false); // Fetch the woeid data in order the get data details
+      const findWoeid = data.find(data => data.woeid);
+      setIsLoading(false); // const findData = data.length !== '' && data
+      // Fetch the woeid data in order the get data details
 
-      const API_URL_WOEID = `${CORS_API}https://www.metaweather.com/api/location/${data[0].woeid}/`;
+      const API_URL_WOEID = `${CORS_API}https://www.metaweather.com/api/location/${findWoeid.woeid}/`;
       const fetchWeatherWoeid = await fetch(API_URL_WOEID);
       const weatherData = await fetchWeatherWoeid.json();
       setWoeid(weatherData);
@@ -33913,7 +33914,6 @@ function GlobalContextProvider({
   function submitWeather(e) {
     e.preventDefault();
     getWeather();
-    console.log(query);
     setIsClicked(false);
   } // Show the pannel
 
@@ -34002,7 +34002,7 @@ function searchCity() {
     className: "cities--wrapper"
   }, isShowedCity && query !== [] && query?.map(loc => /*#__PURE__*/_react.default.createElement("button", {
     key: loc.id,
-    onClick: () => setLocation(loc.title),
+    onClick: submitWeather,
     className: "btn--seacrh--city"
   }, loc.title))));
 }
@@ -34362,7 +34362,9 @@ function App() {
     className: "App--container"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "App--wrapper"
-  }, !isClicked && /*#__PURE__*/_react.default.createElement(_Header.default, null), /*#__PURE__*/_react.default.createElement(_weatherToday.default, null)), /*#__PURE__*/_react.default.createElement(_weather.default, null)));
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "App--sub--wrapper"
+  }, !isClicked && /*#__PURE__*/_react.default.createElement(_Header.default, null), /*#__PURE__*/_react.default.createElement(_weatherToday.default, null))), /*#__PURE__*/_react.default.createElement(_weather.default, null)));
 }
 
 var _default = App;
@@ -34411,7 +34413,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64593" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57025" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

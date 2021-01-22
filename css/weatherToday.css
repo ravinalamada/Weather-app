@@ -1,7 +1,6 @@
 
 .weather--today--container {
   padding-top: 29px;
-  background: #1E213A;
 }
 
 .weather--today--wrapper {
@@ -15,7 +14,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: baseline;
-  margin-top: 87px;
+  margin-top: 37px;
   margin-bottom: 87px;
 }
 
@@ -23,10 +22,6 @@
 .weather--date,
 .weather--city {
   color: #A09FB1;
-}
-
-.weather--name {
-  font-size: 36px;
 }
 
 .weather--date
@@ -42,20 +37,16 @@
 .weaterTod--title--wrapper {
   display: flex;
   flex-direction: row-reverse;
-  text-align: center;
   justify-content: center;
-  margin-top: 32px;
+  align-items: center;
+  margin-top: 22px;
   padding-bottom: 52px;
 }
 
 .weather--name {
-  font-size: 36px;
-  line-height: 42px;
+  font-size: 18px;
+  line-height: 21px;
   margin: 0;
-}
-
-.weather--name {
-  font-weight: 500;
 }
 
 .weather--temp {
@@ -75,13 +66,11 @@
 
   .weather--temp {
     font-size: 80px;
-    /* margin-top: 40px;
-    margin-bottom: 23px; */
   }
 
   .weather__img--today {
-    width: 202px;
-    height: 234px;
+    width: 102px;
+    height: 134px;
   }
 
 }

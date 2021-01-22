@@ -35,7 +35,7 @@ function searchCity() {
         {isShowedCity && query !== [] && query?.map(loc => (
           <button
             key={loc.id}
-            onClick={() => setLocation(loc.title) }
+            onClick={submitWeather}
             className="btn--seacrh--city">
               {loc.title}
             </button>
