@@ -33878,7 +33878,8 @@ function GlobalContextProvider({
 }) {
   const [location, setLocation] = (0, _react.useState)('london'); // Default location
 
-  const [query, setQuery] = (0, _react.useState)([]); // const [woeid, setWoeid] = useState({}); // Default woeid
+  const [query, setQuery] = (0, _react.useState)([]);
+  const [woeid, setWoeid] = (0, _react.useState)({}); // Default woeid
 
   const [isLoading, setIsLoading] = (0, _react.useState)(true); // Loading the page
 
@@ -34413,7 +34414,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57025" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52674" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

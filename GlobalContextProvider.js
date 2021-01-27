@@ -9,7 +9,7 @@ const CORS_API = 'https://cors-anywhere.herokuapp.com/';
 function GlobalContextProvider({children}) {
   const [location, setLocation] = useState('london');// Default location
   const [query, setQuery] = useState([])
-  // const [woeid, setWoeid] = useState({}); // Default woeid
+  const [woeid, setWoeid] = useState({}); // Default woeid
   const [isLoading, setIsLoading] = useState(true); // Loading the page
   const [isClicked, setIsClicked] = useState(false);
   const [isCeluis, setIsCeluis] = useState(false);
