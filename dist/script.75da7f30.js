@@ -33895,6 +33895,7 @@ function GlobalContextProvider({
 
     if (data.length) {
       const findWoeid = data.find(data => data.woeid);
+      console.log(findWoeid);
       setIsLoading(false); // const findData = data.length !== '' && data
       // Fetch the woeid data in order the get data details
 
@@ -34003,7 +34004,10 @@ function searchCity() {
     className: "cities--wrapper"
   }, isShowedCity && query !== [] && query?.map(loc => /*#__PURE__*/_react.default.createElement("button", {
     key: loc.id,
-    onClick: submitWeather,
+    onClick: () => {
+      setLocation(loc.title);
+      submitWeather();
+    },
     className: "btn--seacrh--city"
   }, loc.title))));
 }
@@ -34414,7 +34418,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52674" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65076" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

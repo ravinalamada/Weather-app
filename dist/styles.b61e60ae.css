@@ -65,13 +65,13 @@ img {
   margin-top: -0.5rem;
 }
 
-.App--sub--wrapper {
-  background-image: url('/Cloud-background.d8d8ce62.png');
+/* .App--sub--wrapper {
+  background-image: url('../images/Cloud-background.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position-y: 29%;
   /* opacity: 0.4; */
-}
+/* } */
 
 @media (min-width: 1125px) {
 
