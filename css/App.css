@@ -1,15 +1,15 @@
 .App--wrapper {
-  background: #1E213A;
+  background: hsl(234, 32%, 17%);
   margin-top: -0.5rem;
+  position: relative;
+  width: 100%;
 }
 
-/* .App--sub--wrapper {
-  background-image: url('../images/Cloud-background.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-y: 29%;
-  /* opacity: 0.4; */
-/* } */
+.weather--container,
+.weatherToday--container {
+  width: 100%;
+  position: relative;
+}
 
 @media (min-width: 1125px) {
 

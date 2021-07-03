@@ -25,38 +25,41 @@ function weather() {
       month: "short",
     });
   return (
-    <>
+    <div className="weatherToday--container">
       <WeatherLoading />
-      {
-        !isLoading && weatherToday && 
-        <div className="weatherToday--container">
-          {!isClicked ?
-            <div className="weatherToday--wrapper">
-              <Header />
-              <img src={`https://www.metaweather.com//static/img/weather/${weatherToday.weather_state_abbr}.svg`} alt="images"
-                   className='weatherToday__image' />
-              <div>
+      <div className="header--container">
+         {!isClicked && <Header />}
+      </div>
+      {!isLoading && weatherToday && (
+        <div className="weatherToday--wrapper">
+          {!isClicked ? (
+            <div className="weather--today--container">
+              <img
+                src={`https://www.metaweather.com//static/img/weather/${weatherToday.weather_state_abbr}.svg`}
+                alt="images"
+              />
+              <div className="weather--today--wrapper">
                 {isCeluis ? (
-                      <p className="weather--temp">
-                        {Math.floor(weatherToday.the_temp * 1.8 + 32)}&deg;F
-                      </p>
-                  ) : (
-                      <p className="weather--temp">
-                        {Math.floor(weatherToday.the_temp)}&deg;C
-                      </p>
-                  )}
+                  <div className="weather--temperature--wrapper">
+                    <p className="weather--temp">
+                      {Math.floor(weatherToday.the_temp * 1.8 + 32)}
+                    </p>
+                    <span className="weather--temp--unit"> &deg;F</span>
+                  </div>
+                ) : (
+                  <div className="weather--temperature--wrapper">
+                    <p className="weather--temp">
+                      {Math.floor(weatherToday.the_temp)}
+                    </p>
+                    <span className="weather--temp--unit">&deg;C</span>
+                  </div>
+                )}
                 <p className="weather--name">
                   {weatherToday.weather_state_name}
                 </p>
-              </div>
-              <div className="weatherToday--subWrapper">
-                <div className='date--wrapper'>
-                    <p>Today</p>
-                    <p>.</p>
-                    <p>{dateToday}</p>
-                  </div>
-                <div className="title--wrapper">
-                  <p className="heading3 weather--city">{woeid.title}</p>
+                <p className="weather--date">Today: {dateToday}</p>
+                <div className="weaterTod--title--wrapper">
+                  <h3 className="heading3 weather--city">{woeid.title}</h3>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     height="24"
@@ -70,11 +73,12 @@ function weather() {
                 </div>
               </div>
             </div>
-          : <SearchCity />
-          }
-        </div>  
-      }
-    </>
+          ) : (
+            <SearchCity />
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 

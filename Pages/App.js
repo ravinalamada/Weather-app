@@ -10,15 +10,9 @@ function App() {
 
   return (
     <article className="App">
-      <div className="App--container">
-        <div className="App--wrapper">
-          <div className="App--sub--wrapper">
-            {!isClicked && <Header />}
-            <WeatherToday />
-          </div>
-        </div>
+        <WeatherToday />
+
         <Weather />
-      </div>
     </article>
   )
 }

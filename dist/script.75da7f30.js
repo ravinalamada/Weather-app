@@ -214,7 +214,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
   return to;
 };
 },{}],"node_modules/react/cjs/react.development.js":[function(require,module,exports) {
-/** @license React v17.0.1
+/** @license React v17.0.2
  * react.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -231,7 +231,7 @@ if ("development" !== "production") {
     var _assign = require('object-assign'); // TODO: this is special because it gets imported during build.
 
 
-    var ReactVersion = '17.0.1'; // ATTENTION
+    var ReactVersion = '17.0.2'; // ATTENTION
     // When adding new symbols to this file,
     // Please consider also adding to 'react-devtools-shared/src/backend/ReactSymbols'
     // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
@@ -2506,7 +2506,7 @@ if ("development" === 'production') {
   module.exports = require('./cjs/react.development.js');
 }
 },{"./cjs/react.development.js":"node_modules/react/cjs/react.development.js"}],"node_modules/scheduler/cjs/scheduler.development.js":[function(require,module,exports) {
-/** @license React v0.20.1
+/** @license React v0.20.2
  * scheduler.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -2521,7 +2521,7 @@ if ("development" !== "production") {
     'use strict';
 
     var enableSchedulerDebugging = false;
-    var enableProfiling = true;
+    var enableProfiling = false;
     var requestHostCallback;
     var requestHostTimeout;
     var cancelHostTimeout;
@@ -2793,179 +2793,13 @@ if ("development" !== "production") {
     } // TODO: Use symbols?
 
 
-    var NoPriority = 0;
     var ImmediatePriority = 1;
     var UserBlockingPriority = 2;
     var NormalPriority = 3;
     var LowPriority = 4;
     var IdlePriority = 5;
-    var runIdCounter = 0;
-    var mainThreadIdCounter = 0;
-    var profilingStateSize = 4;
-    var sharedProfilingBuffer = // $FlowFixMe Flow doesn't know about SharedArrayBuffer
-    typeof SharedArrayBuffer === 'function' ? new SharedArrayBuffer(profilingStateSize * Int32Array.BYTES_PER_ELEMENT) : // $FlowFixMe Flow doesn't know about ArrayBuffer
-    typeof ArrayBuffer === 'function' ? new ArrayBuffer(profilingStateSize * Int32Array.BYTES_PER_ELEMENT) : null // Don't crash the init path on IE9
-    ;
-    var profilingState = sharedProfilingBuffer !== null ? new Int32Array(sharedProfilingBuffer) : []; // We can't read this but it helps save bytes for null checks
 
-    var PRIORITY = 0;
-    var CURRENT_TASK_ID = 1;
-    var CURRENT_RUN_ID = 2;
-    var QUEUE_SIZE = 3;
-    {
-      profilingState[PRIORITY] = NoPriority; // This is maintained with a counter, because the size of the priority queue
-      // array might include canceled tasks.
-
-      profilingState[QUEUE_SIZE] = 0;
-      profilingState[CURRENT_TASK_ID] = 0;
-    } // Bytes per element is 4
-
-    var INITIAL_EVENT_LOG_SIZE = 131072;
-    var MAX_EVENT_LOG_SIZE = 524288; // Equivalent to 2 megabytes
-
-    var eventLogSize = 0;
-    var eventLogBuffer = null;
-    var eventLog = null;
-    var eventLogIndex = 0;
-    var TaskStartEvent = 1;
-    var TaskCompleteEvent = 2;
-    var TaskErrorEvent = 3;
-    var TaskCancelEvent = 4;
-    var TaskRunEvent = 5;
-    var TaskYieldEvent = 6;
-    var SchedulerSuspendEvent = 7;
-    var SchedulerResumeEvent = 8;
-
-    function logEvent(entries) {
-      if (eventLog !== null) {
-        var offset = eventLogIndex;
-        eventLogIndex += entries.length;
-
-        if (eventLogIndex + 1 > eventLogSize) {
-          eventLogSize *= 2;
-
-          if (eventLogSize > MAX_EVENT_LOG_SIZE) {
-            // Using console['error'] to evade Babel and ESLint
-            console['error']("Scheduler Profiling: Event log exceeded maximum size. Don't " + 'forget to call `stopLoggingProfilingEvents()`.');
-            stopLoggingProfilingEvents();
-            return;
-          }
-
-          var newEventLog = new Int32Array(eventLogSize * 4);
-          newEventLog.set(eventLog);
-          eventLogBuffer = newEventLog.buffer;
-          eventLog = newEventLog;
-        }
-
-        eventLog.set(entries, offset);
-      }
-    }
-
-    function startLoggingProfilingEvents() {
-      eventLogSize = INITIAL_EVENT_LOG_SIZE;
-      eventLogBuffer = new ArrayBuffer(eventLogSize * 4);
-      eventLog = new Int32Array(eventLogBuffer);
-      eventLogIndex = 0;
-    }
-
-    function stopLoggingProfilingEvents() {
-      var buffer = eventLogBuffer;
-      eventLogSize = 0;
-      eventLogBuffer = null;
-      eventLog = null;
-      eventLogIndex = 0;
-      return buffer;
-    }
-
-    function markTaskStart(task, ms) {
-      {
-        profilingState[QUEUE_SIZE]++;
-
-        if (eventLog !== null) {
-          // performance.now returns a float, representing milliseconds. When the
-          // event is logged, it's coerced to an int. Convert to microseconds to
-          // maintain extra degrees of precision.
-          logEvent([TaskStartEvent, ms * 1000, task.id, task.priorityLevel]);
-        }
-      }
-    }
-
-    function markTaskCompleted(task, ms) {
-      {
-        profilingState[PRIORITY] = NoPriority;
-        profilingState[CURRENT_TASK_ID] = 0;
-        profilingState[QUEUE_SIZE]--;
-
-        if (eventLog !== null) {
-          logEvent([TaskCompleteEvent, ms * 1000, task.id]);
-        }
-      }
-    }
-
-    function markTaskCanceled(task, ms) {
-      {
-        profilingState[QUEUE_SIZE]--;
-
-        if (eventLog !== null) {
-          logEvent([TaskCancelEvent, ms * 1000, task.id]);
-        }
-      }
-    }
-
-    function markTaskErrored(task, ms) {
-      {
-        profilingState[PRIORITY] = NoPriority;
-        profilingState[CURRENT_TASK_ID] = 0;
-        profilingState[QUEUE_SIZE]--;
-
-        if (eventLog !== null) {
-          logEvent([TaskErrorEvent, ms * 1000, task.id]);
-        }
-      }
-    }
-
-    function markTaskRun(task, ms) {
-      {
-        runIdCounter++;
-        profilingState[PRIORITY] = task.priorityLevel;
-        profilingState[CURRENT_TASK_ID] = task.id;
-        profilingState[CURRENT_RUN_ID] = runIdCounter;
-
-        if (eventLog !== null) {
-          logEvent([TaskRunEvent, ms * 1000, task.id, runIdCounter]);
-        }
-      }
-    }
-
-    function markTaskYield(task, ms) {
-      {
-        profilingState[PRIORITY] = NoPriority;
-        profilingState[CURRENT_TASK_ID] = 0;
-        profilingState[CURRENT_RUN_ID] = 0;
-
-        if (eventLog !== null) {
-          logEvent([TaskYieldEvent, ms * 1000, task.id, runIdCounter]);
-        }
-      }
-    }
-
-    function markSchedulerSuspended(ms) {
-      {
-        mainThreadIdCounter++;
-
-        if (eventLog !== null) {
-          logEvent([SchedulerSuspendEvent, ms * 1000, mainThreadIdCounter]);
-        }
-      }
-    }
-
-    function markSchedulerUnsuspended(ms) {
-      {
-        if (eventLog !== null) {
-          logEvent([SchedulerResumeEvent, ms * 1000, mainThreadIdCounter]);
-        }
-      }
-    }
+    function markTaskErrored(task, ms) {}
     /* eslint-disable no-var */
     // Math.pow(2, 30) - 1
     // 0b111111111111111111111111111111
@@ -3006,10 +2840,6 @@ if ("development" !== "production") {
           pop(timerQueue);
           timer.sortIndex = timer.expirationTime;
           push(taskQueue, timer);
-          {
-            markTaskStart(timer, currentTime);
-            timer.isQueued = true;
-          }
         } else {
           // Remaining timers are pending.
           return;
@@ -3038,10 +2868,6 @@ if ("development" !== "production") {
     }
 
     function flushWork(hasTimeRemaining, initialTime) {
-      {
-        markSchedulerUnsuspended(initialTime);
-      } // We'll need a host callback the next time work is scheduled.
-
       isHostCallbackScheduled = false;
 
       if (isHostTimeoutScheduled) {
@@ -3074,11 +2900,6 @@ if ("development" !== "production") {
         currentTask = null;
         currentPriorityLevel = previousPriorityLevel;
         isPerformingWork = false;
-        {
-          var _currentTime = exports.unstable_now();
-
-          markSchedulerSuspended(_currentTime);
-        }
       }
     }
 
@@ -3099,19 +2920,12 @@ if ("development" !== "production") {
           currentTask.callback = null;
           currentPriorityLevel = currentTask.priorityLevel;
           var didUserCallbackTimeout = currentTask.expirationTime <= currentTime;
-          markTaskRun(currentTask, currentTime);
           var continuationCallback = callback(didUserCallbackTimeout);
           currentTime = exports.unstable_now();
 
           if (typeof continuationCallback === 'function') {
             currentTask.callback = continuationCallback;
-            markTaskYield(currentTask, currentTime);
           } else {
-            {
-              markTaskCompleted(currentTask, currentTime);
-              currentTask.isQueued = false;
-            }
-
             if (currentTask === peek(taskQueue)) {
               pop(taskQueue);
             }
@@ -3254,9 +3068,6 @@ if ("development" !== "production") {
         expirationTime: expirationTime,
         sortIndex: -1
       };
-      {
-        newTask.isQueued = false;
-      }
 
       if (startTime > currentTime) {
         // This is a delayed task.
@@ -3277,12 +3088,7 @@ if ("development" !== "production") {
         }
       } else {
         newTask.sortIndex = expirationTime;
-        push(taskQueue, newTask);
-        {
-          markTaskStart(newTask, currentTime);
-          newTask.isQueued = true;
-        } // Schedule a host callback, if needed. If we're already performing work,
-        // wait until the next time we yield.
+        push(taskQueue, newTask); // wait until the next time we yield.
 
         if (!isHostCallbackScheduled && !isPerformingWork) {
           isHostCallbackScheduled = true;
@@ -3307,16 +3113,8 @@ if ("development" !== "production") {
     }
 
     function unstable_cancelCallback(task) {
-      {
-        if (task.isQueued) {
-          var currentTime = exports.unstable_now();
-          markTaskCanceled(task, currentTime);
-          task.isQueued = false;
-        }
-      } // Null out the callback to indicate the task has been canceled. (Can't
       // remove from the queue because you can't remove arbitrary nodes from an
       // array based heap, only the first one.)
-
       task.callback = null;
     }
 
@@ -3325,11 +3123,7 @@ if ("development" !== "production") {
     }
 
     var unstable_requestPaint = requestPaint;
-    var unstable_Profiling = {
-      startLoggingProfilingEvents: startLoggingProfilingEvents,
-      stopLoggingProfilingEvents: stopLoggingProfilingEvents,
-      sharedProfilingBuffer: sharedProfilingBuffer
-    };
+    var unstable_Profiling = null;
     exports.unstable_IdlePriority = IdlePriority;
     exports.unstable_ImmediatePriority = ImmediatePriority;
     exports.unstable_LowPriority = LowPriority;
@@ -3357,7 +3151,7 @@ if ("development" === 'production') {
   module.exports = require('./cjs/scheduler.development.js');
 }
 },{"./cjs/scheduler.development.js":"node_modules/scheduler/cjs/scheduler.development.js"}],"node_modules/scheduler/cjs/scheduler-tracing.development.js":[function(require,module,exports) {
-/** @license React v0.20.1
+/** @license React v0.20.2
  * scheduler-tracing.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -3713,7 +3507,7 @@ if ("development" === 'production') {
   module.exports = require('./cjs/scheduler-tracing.development.js');
 }
 },{"./cjs/scheduler-tracing.development.js":"node_modules/scheduler/cjs/scheduler-tracing.development.js"}],"node_modules/react-dom/cjs/react-dom.development.js":[function(require,module,exports) {
-/** @license React v17.0.1
+/** @license React v17.0.2
  * react-dom.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -15113,7 +14907,7 @@ if ("development" !== "production") {
     } // TODO: this is special because it gets imported during build.
 
 
-    var ReactVersion = '17.0.1';
+    var ReactVersion = '17.0.2';
     var NoMode = 0;
     var StrictMode = 1; // TODO: Remove BlockingMode and ConcurrentMode by reading from the root
     // tag instead
@@ -29772,7 +29566,23 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"node_modules/@babel/runtime/helpers/esm/inheritsLoose.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"node_modules/react-dom/cjs/react-dom.development.js"}],"node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _setPrototypeOf;
+
+function _setPrototypeOf(o, p) {
+  exports.default = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+},{}],"node_modules/@babel/runtime/helpers/esm/inheritsLoose.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29780,12 +29590,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = _inheritsLoose;
 
+var _setPrototypeOf = _interopRequireDefault(require("./setPrototypeOf.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _inheritsLoose(subClass, superClass) {
   subClass.prototype = Object.create(superClass.prototype);
   subClass.prototype.constructor = subClass;
-  subClass.__proto__ = superClass;
+  (0, _setPrototypeOf.default)(subClass, superClass);
 }
-},{}],"node_modules/react-is/cjs/react-is.development.js":[function(require,module,exports) {
+},{"./setPrototypeOf.js":"node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js"}],"node_modules/react-is/cjs/react-is.development.js":[function(require,module,exports) {
 /** @license React v16.13.1
  * react-is.development.js
  *
@@ -31911,9 +31725,9 @@ var _tinyWarning = _interopRequireDefault(require("tiny-warning"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var MAX_SIGNED_31_BIT_INT = 1073741823;
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : {};
@@ -33864,9 +33678,9 @@ exports.Context = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const Context = (0, _react.createContext)(); // cors API
 
@@ -33895,10 +33709,7 @@ function GlobalContextProvider({
 
     if (data.length) {
       const findWoeid = data.find(data => data.woeid);
-      console.log(findWoeid);
-      setIsLoading(false); // const findData = data.length !== '' && data
-      // Fetch the woeid data in order the get data details
-
+      setIsLoading(false);
       const API_URL_WOEID = `${CORS_API}https://www.metaweather.com/api/location/${findWoeid.woeid}/`;
       const fetchWeatherWoeid = await fetch(API_URL_WOEID);
       const weatherData = await fetchWeatherWoeid.json();
@@ -33961,9 +33772,9 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _GlobalContextProvider = require("../GlobalContextProvider");
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function searchCity() {
   const {
@@ -34002,14 +33813,14 @@ function searchCity() {
     className: "form__btn"
   }, "search")))), /*#__PURE__*/_react.default.createElement("div", {
     className: "cities--wrapper"
-  }, isShowedCity && query !== [] && query?.map(loc => /*#__PURE__*/_react.default.createElement("button", {
+  }, isShowedCity && query !== [] && (query === null || query === void 0 ? void 0 : query.map(loc => /*#__PURE__*/_react.default.createElement("button", {
     key: loc.id,
     onClick: () => {
       setLocation(loc.title);
       submitWeather();
     },
     className: "btn--seacrh--city"
-  }, loc.title))));
+  }, loc.title)))));
 }
 
 var _default = searchCity;
@@ -34026,9 +33837,9 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _GlobalContextProvider = require("../GlobalContextProvider");
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 // This will display the loading context while the data is loading
 function weatherLoading() {
@@ -34048,6 +33859,48 @@ function weatherLoading() {
 
 var _default = weatherLoading;
 exports.default = _default;
+},{"react":"node_modules/react/index.js","../GlobalContextProvider":"GlobalContextProvider.js"}],"components/Header.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _GlobalContextProvider = require("../GlobalContextProvider");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function Header() {
+  const {
+    handleClick
+  } = (0, _react.useContext)(_GlobalContextProvider.Context);
+  return /*#__PURE__*/_react.default.createElement("header", {
+    className: "header"
+  }, /*#__PURE__*/_react.default.createElement("button", {
+    className: "header__btn--search",
+    onClick: handleClick
+  }, "Search for places"), /*#__PURE__*/_react.default.createElement("button", {
+    className: "header__btn"
+  }, /*#__PURE__*/_react.default.createElement("svg", {
+    stroke: "#E7E7EB",
+    fill: "#E7E7EB",
+    strokeWidth: "0",
+    viewBox: "0 0 24 24",
+    height: "22px",
+    width: "22px",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/_react.default.createElement("path", {
+    d: "M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
+  }))));
+}
+
+var _default = Header;
+exports.default = _default;
 },{"react":"node_modules/react/index.js","../GlobalContextProvider":"GlobalContextProvider.js"}],"components/weatherToday.js":[function(require,module,exports) {
 "use strict";
 
@@ -34064,11 +33917,13 @@ var _searchCity = _interopRequireDefault(require("./searchCity"));
 
 var _weatherLoading = _interopRequireDefault(require("./weatherLoading"));
 
+var _Header = _interopRequireDefault(require("./Header"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function weather() {
   const {
@@ -34080,42 +33935,32 @@ function weather() {
 
   const weatherToday = !isLoading && woeid && woeid.consolidated_weather && woeid.consolidated_weather[0];
   const date = new Date(!isLoading && weatherToday && weatherToday.applicable_date);
-  const dateToday = !isLoading && date && date.toLocaleString('en-us', {
-    day: 'numeric',
-    weekday: 'short',
-    month: 'short'
+  const dateToday = !isLoading && date && date.toLocaleString("en-us", {
+    day: "numeric",
+    weekday: "short",
+    month: "short"
   });
-  return /*#__PURE__*/_react.default.createElement("section", {
-    className: "section--weaher--today"
-  }, /*#__PURE__*/_react.default.createElement(_weatherLoading.default, null), !isLoading && weatherToday && /*#__PURE__*/_react.default.createElement("div", {
-    className: "weather--container"
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_weatherLoading.default, null), !isLoading && weatherToday && /*#__PURE__*/_react.default.createElement("div", {
+    className: "weatherToday--container"
   }, !isClicked ? /*#__PURE__*/_react.default.createElement("div", {
-    className: "weather--today--container"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "weather--today--wrapper"
-  }, /*#__PURE__*/_react.default.createElement("img", {
-    className: "weather__img--today",
+    className: "weatherToday--wrapper"
+  }, /*#__PURE__*/_react.default.createElement(_Header.default, null), /*#__PURE__*/_react.default.createElement("img", {
     src: `https://www.metaweather.com//static/img/weather/${weatherToday.weather_state_abbr}.svg`,
-    alt: "photo"
-  }), isCeluis ? /*#__PURE__*/_react.default.createElement("div", {
-    className: "weather--temperature--wrapper"
-  }, /*#__PURE__*/_react.default.createElement("p", {
+    alt: "images",
+    className: "weatherToday__image"
+  }), /*#__PURE__*/_react.default.createElement("div", null, isCeluis ? /*#__PURE__*/_react.default.createElement("p", {
     className: "weather--temp"
-  }, Math.floor(weatherToday.the_temp * 1.8 + 32)), /*#__PURE__*/_react.default.createElement("span", {
-    className: "weather--temp--unit"
-  }, " \xB0F")) : /*#__PURE__*/_react.default.createElement("div", {
-    className: "weather--temperature--wrapper"
-  }, /*#__PURE__*/_react.default.createElement("span", {
+  }, Math.floor(weatherToday.the_temp * 1.8 + 32), "\xB0F") : /*#__PURE__*/_react.default.createElement("p", {
     className: "weather--temp"
-  }, Math.floor(weatherToday.the_temp)), /*#__PURE__*/_react.default.createElement("span", {
-    className: "weather--temp--unit"
-  }, "\xB0C")), /*#__PURE__*/_react.default.createElement("p", {
+  }, Math.floor(weatherToday.the_temp), "\xB0C"), /*#__PURE__*/_react.default.createElement("p", {
     className: "weather--name"
-  }, weatherToday.weather_state_name), /*#__PURE__*/_react.default.createElement("p", {
-    className: "weather--date"
-  }, "Today: ", dateToday), /*#__PURE__*/_react.default.createElement("div", {
-    className: "weaterTod--title--wrapper"
-  }, /*#__PURE__*/_react.default.createElement("h3", {
+  }, weatherToday.weather_state_name)), /*#__PURE__*/_react.default.createElement("div", {
+    className: "weatherToday--subWrapper"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "date--wrapper"
+  }, /*#__PURE__*/_react.default.createElement("p", null, "Today"), /*#__PURE__*/_react.default.createElement("p", null, "."), /*#__PURE__*/_react.default.createElement("p", null, dateToday)), /*#__PURE__*/_react.default.createElement("div", {
+    className: "title--wrapper"
+  }, /*#__PURE__*/_react.default.createElement("p", {
     className: "heading3 weather--city"
   }, woeid.title), /*#__PURE__*/_react.default.createElement("svg", {
     xmlns: "http://www.w3.org/2000/svg",
@@ -34133,7 +33978,7 @@ function weather() {
 
 var _default = weather;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","../GlobalContextProvider":"GlobalContextProvider.js","./searchCity":"components/searchCity.js","./weatherLoading":"components/weatherLoading.js"}],"components/weather.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../GlobalContextProvider":"GlobalContextProvider.js","./searchCity":"components/searchCity.js","./weatherLoading":"components/weatherLoading.js","./Header":"components/Header.js"}],"components/weather.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34149,9 +33994,9 @@ var _weatherLoading = _interopRequireDefault(require("./weatherLoading"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function weather() {
   const {
@@ -34172,12 +34017,12 @@ function weather() {
   const weather6 = !isLoading && woeid && woeid.consolidated_weather && woeid.consolidated_weather[5]; // Put all of the weathers which are not today and map them after
 
   const weathers = [weatherTom, weather3, weather4, weather5, weather6];
-  return /*#__PURE__*/_react.default.createElement("section", {
-    className: "section--container"
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "weather--container"
   }, /*#__PURE__*/_react.default.createElement(_weatherLoading.default, null), !isLoading && weatherToday && /*#__PURE__*/_react.default.createElement("div", {
-    className: "weathers--container"
+    className: "weather--wrapper"
   }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "temp--units--container"
+    className: "temp--units--wrapper"
   }, /*#__PURE__*/_react.default.createElement("button", {
     className: `${!isCeluis ? 'bg-light-gray' : 'bg-dark-gray'} weather__btn`,
     onClick: convertFarUnitIntoCeluis
@@ -34185,41 +34030,39 @@ function weather() {
     className: isCeluis ? 'bg-light-gray' : 'bg-dark-gray',
     onClick: convertUnitCeluisIntoFar
   }, "\xB0F")), /*#__PURE__*/_react.default.createElement("div", {
-    className: "weathers--wrapper"
+    className: "weather--subWrapper"
   }, !isLoading && weathers && weathers.map(weather => /*#__PURE__*/_react.default.createElement("div", {
     key: weather.id,
     className: "weather--wrapper--contents"
   }, /*#__PURE__*/_react.default.createElement("p", {
-    className: "date"
+    className: "weather--date"
   }, weather.applicable_date === dateTom ? 'Tommorow' : new Date(weather.applicable_date).toLocaleDateString('en-us', {
     day: 'numeric',
     weekday: 'short',
     month: 'short'
   })), /*#__PURE__*/_react.default.createElement("img", {
-    className: "images",
+    className: "weather--images",
     src: `https://www.metaweather.com//static/img/weather/${weather.weather_state_abbr}.svg`,
     alt: "photo"
   }), /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--temp--wrapper"
   }, isCeluis ? /*#__PURE__*/_react.default.createElement("p", {
-    className: "date"
+    className: "weather--unit"
   }, " ", Math.floor(weather.max_temp * 1.8 + 32), "  \xB0F") : /*#__PURE__*/_react.default.createElement("p", null, Math.floor(weather.max_temp), "  \xB0C"), isCeluis ? /*#__PURE__*/_react.default.createElement("p", {
-    className: "date"
-  }, " ", Math.floor(weather.min_temp * 1.8 + 32), "  \xB0F") : /*#__PURE__*/_react.default.createElement("p", null, Math.floor(weather.min_temp), "  \xB0C"))))), /*#__PURE__*/_react.default.createElement("h2", {
+    className: "weather--unit"
+  }, " ", Math.floor(weather.min_temp * 1.8 + 32), "  \xB0F") : /*#__PURE__*/_react.default.createElement("p", null, Math.floor(weather.min_temp), "  \xB0C"))))), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", {
     className: "heading2"
   }, "Today's Highlights"), /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--highlight--container"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--highlight--wrapper"
-  }, /*#__PURE__*/_react.default.createElement("h3", {
-    className: "weather__heading3"
-  }, "Wind status"), /*#__PURE__*/_react.default.createElement("div", {
-    className: "weather--speed--wrapper"
+  }, /*#__PURE__*/_react.default.createElement("p", {
+    className: "weather__headings"
+  }, "Wind status"), /*#__PURE__*/_react.default.createElement("p", {
+    className: "weather--direction"
   }, /*#__PURE__*/_react.default.createElement("span", {
-    className: "weather--speed"
-  }, weatherToday.wind_speed.toFixed(2)), /*#__PURE__*/_react.default.createElement("span", {
-    className: "weather--speed--unit"
-  }, "mph")), /*#__PURE__*/_react.default.createElement("div", {
+    className: "weather--direction--value"
+  }, weatherToday.wind_speed.toFixed(2)), "mph"), /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--direction--wrapper"
   }, /*#__PURE__*/_react.default.createElement("h4", {
     className: "weather--speed--direction"
@@ -34239,15 +34082,15 @@ function weather() {
     d: "M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"
   }))))), /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--highlight--wrapper"
-  }, /*#__PURE__*/_react.default.createElement("h3", {
-    className: "weather__heading3"
-  }, "Humidity"), /*#__PURE__*/_react.default.createElement("div", {
-    className: "weather--humidity--wrapper"
-  }, /*#__PURE__*/_react.default.createElement("span", {
+  }, /*#__PURE__*/_react.default.createElement("p", {
+    className: "weather__headings"
+  }, "Humidity"), /*#__PURE__*/_react.default.createElement("p", {
     className: "weather--humidity"
-  }, "79"), /*#__PURE__*/_react.default.createElement("span", {
-    className: "weather--humidity--unit"
-  }, "%")), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("span", {
+    className: "weather--humidity--value"
+  }, "79"), "%"), /*#__PURE__*/_react.default.createElement("div", {
+    className: "progress--wrapper"
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "progress--value"
   }, /*#__PURE__*/_react.default.createElement("label", {
     className: "weather__label"
@@ -34256,18 +34099,18 @@ function weather() {
   }, "50"), /*#__PURE__*/_react.default.createElement("label", {
     className: "weather__label"
   }, "100")), /*#__PURE__*/_react.default.createElement("div", {
-    className: "progress--wrapper"
-  }, /*#__PURE__*/_react.default.createElement("progress", {
-    className: "progress",
-    id: "humidity",
-    value: weatherToday.humidity,
-    max: "100"
-  }), /*#__PURE__*/_react.default.createElement("span", {
+    className: "progress__image--wrapper"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "progress-bar",
+    style: {
+      width: weatherToday.humidity
+    }
+  }), /*#__PURE__*/_react.default.createElement("p", {
     className: "percentage"
-  }, "%"))), /*#__PURE__*/_react.default.createElement("div", {
+  }, "%")))), /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--highlight--wrapper"
-  }, /*#__PURE__*/_react.default.createElement("h3", {
-    className: "weather__heading3"
+  }, /*#__PURE__*/_react.default.createElement("p", {
+    className: "weather__headings"
   }, "Visibility"), /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--visibility--wrapper"
   }, /*#__PURE__*/_react.default.createElement("span", {
@@ -34276,64 +34119,20 @@ function weather() {
     className: "weather--visibility--unit"
   }, "miles"))), /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--highlight--wrapper"
-  }, /*#__PURE__*/_react.default.createElement("h3", {
-    className: "weather__heading3"
+  }, /*#__PURE__*/_react.default.createElement("p", {
+    className: "weather__headings"
   }, "Air Pressure"), /*#__PURE__*/_react.default.createElement("div", {
     className: "weather--air--pressure--wrapper"
   }, /*#__PURE__*/_react.default.createElement("span", {
     className: "weather--air--pressure"
   }, weatherToday.air_pressure), /*#__PURE__*/_react.default.createElement("span", {
     className: "weather--air--pressure--unit"
-  }, "mb"))))));
+  }, "mb")))))));
 }
 
 var _default = weather;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","../GlobalContextProvider":"GlobalContextProvider.js","./weatherLoading":"components/weatherLoading.js"}],"components/Header.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _GlobalContextProvider = require("../GlobalContextProvider");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function Header() {
-  const {
-    handleClick
-  } = (0, _react.useContext)(_GlobalContextProvider.Context);
-  return /*#__PURE__*/_react.default.createElement("header", {
-    className: "header"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "header--container"
-  }, /*#__PURE__*/_react.default.createElement("button", {
-    className: "header__btn--search",
-    onClick: handleClick
-  }, "Search for places"), /*#__PURE__*/_react.default.createElement("button", {
-    className: "header__btn"
-  }, /*#__PURE__*/_react.default.createElement("svg", {
-    stroke: "#E7E7EB",
-    fill: "#E7E7EB",
-    strokeWidth: "0",
-    viewBox: "0 0 24 24",
-    height: "22px",
-    width: "22px",
-    xmlns: "http://www.w3.org/2000/svg"
-  }, /*#__PURE__*/_react.default.createElement("path", {
-    d: "M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
-  })))));
-}
-
-var _default = Header;
-exports.default = _default;
-},{"react":"node_modules/react/index.js","../GlobalContextProvider":"GlobalContextProvider.js"}],"Pages/App.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","../GlobalContextProvider":"GlobalContextProvider.js","./weatherLoading":"components/weatherLoading.js"}],"Pages/App.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34353,9 +34152,9 @@ var _GlobalContextProvider = require("../GlobalContextProvider");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function App() {
   const {
@@ -34363,13 +34162,7 @@ function App() {
   } = (0, _react.useContext)(_GlobalContextProvider.Context);
   return /*#__PURE__*/_react.default.createElement("article", {
     className: "App"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "App--container"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "App--wrapper"
-  }, /*#__PURE__*/_react.default.createElement("div", {
-    className: "App--sub--wrapper"
-  }, !isClicked && /*#__PURE__*/_react.default.createElement(_Header.default, null), /*#__PURE__*/_react.default.createElement(_weatherToday.default, null))), /*#__PURE__*/_react.default.createElement(_weather.default, null)));
+  }, /*#__PURE__*/_react.default.createElement(_weatherToday.default, null), /*#__PURE__*/_react.default.createElement(_weather.default, null));
 }
 
 var _default = App;
@@ -34418,7 +34211,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65076" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58244" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

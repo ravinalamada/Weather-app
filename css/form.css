@@ -1,9 +1,17 @@
 
 .form {
   margin-top: 82px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .search--city {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  overflow: auto;
   padding-left: 18px;
   padding-right: 18px;
   padding-bottom: 30px;
@@ -12,20 +20,19 @@
 
 .form--container {
   display: flex;
+  gap: 15px;
   justify-content: space-between;
-}
-
-.form__fieldset {
-  flex-basis: calc(calc(calc(100% / 5) * 3) + 30px);
-}
-
-.form__btn {
-  flex-basis: calc(calc(100% / 4) - 12px);
+  align-items: center;
 }
 
 .form__input {
-  width: 100%;
-  padding-left: 49px;
+  width: auto;
+  text-align: center;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-text-opacity: 1;
+  color: rgba(231,231,235,var(--tw-text-opacity));
+  border: 2px rgba(160,159,177,var(--tw-border-opacity));
 }
 
 .form__input,
@@ -36,15 +43,19 @@
   padding-bottom: 15px;
   color: #616475;
   background-color: transparent;
+  height: 44px;
 }
 
 .form__btn {
+  font-family: sans-serif;
   background: #3C47E9;
-  color: white;
-  padding-top: 13px;
-  padding-left: 13px;
-  padding-right: 13px;
-  padding-bottom: 13px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #E7E7EB;
+  font-weight: 500;
+  text-transform: capitalize;
+  height: 44px;
+  width: 84.66px;
 }
 
 .close--pannel {
@@ -54,6 +65,8 @@
   font-size: 18px;
   line-height: 17px;
   width: 100%;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
   margin-top: 20px;
 }
 
@@ -76,6 +89,10 @@
 
   .btn--seacrh--city {
     width: 100%;
+  }
+
+  .search--city {
+    position: unset;
   }
 
 }

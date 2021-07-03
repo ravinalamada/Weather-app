@@ -1,77 +1,78 @@
-
-.weather--today--container {
-  padding-top: 29px;
+.weatherToday--container {
+  position: relative;
+  width: 100%;
 }
 
-.weather--today--wrapper {
-  text-align: center;
-  padding-top: 76px;
-  text-align: center;
-}
-
-.weather--temperature--wrapper {
+.weatherToday--wrapper {
+  height: 100vh;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: baseline;
-  margin-top: 37px;
-  margin-bottom: 87px;
-}
-
-.weather--name,
-.weather--date,
-.weather--city {
-  color: #A09FB1;
-}
-
-.weather--date
-.weather--city {
-  font-size: 18px;
-}
-
-.weather--name,
-.weather--city {
-  font-weight: 600;
-}
-
-.weaterTod--title--wrapper {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  margin-top: 22px;
-  padding-bottom: 52px;
+  justify-content: space-between;
+  --tw-bg-opacity: 1;
+  background-color: rgba(30,33,58,var(--tw-bg-opacity));
 }
 
-.weather--name {
-  font-size: 18px;
-  line-height: 21px;
-  margin: 0;
+.weatherToday--wrapper::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 20%;
+  width: 100%;
+  height: 100%;
+  opacity: .05;
+  z-index: 0;
+  background: url(../images/Cloud-background.png);
+  background-repeat: no-repeat;
+  background-position-x: 50%;
+}
+
+.weatherToday__image {
+  width: 10rem;
 }
 
 .weather--temp {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 80px;
+  font-size: 6rem;
+  line-height: 1;
+  --tw-text-opacity: 1;
+  color: rgba(231,231,235,var(--tw-text-opacity))
 }
 
-.weather--temp--unit {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 30px;
-  color: #A09FB1;
+.weather--name {
+  --tw-text-opacity: 1;
+  color: rgba(136,134,157,var(--tw-text-opacity));
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
-@media (min-width: 1125px) {
-
-  .weather--temp {
-    font-size: 80px;
-  }
-
-  .weather__img--today {
-    width: 102px;
-    height: 134px;
-  }
-
+.weatherToday--subWrapper {
+  width: 10rem;
+  padding-bottom: 2rem;
 }
 
+.date--wrapper,
+.title--wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.date--wrapper {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.date--wrapper:first-child,
+.weather--city {
+  --tw-text-opacity: 1;
+  color: rgba(136,134,157,var(--tw-text-opacity));
+}
+
+.title--wrapper {
+  padding-top: 1rem;
+  justify-content: center;
+  flex-direction: row-reverse;
+  gap: 0.5rem;
+}

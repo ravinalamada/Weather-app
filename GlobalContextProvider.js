@@ -26,10 +26,7 @@ function GlobalContextProvider({children}) {
       // Check if there something inside of the data location
       if(data.length) {
         const findWoeid = data.find(data => data.woeid)
-        console.log(findWoeid)
         setIsLoading(false);
-        // const findData = data.length !== '' && data
-        // Fetch the woeid data in order the get data details
         const API_URL_WOEID = `${CORS_API}https://www.metaweather.com/api/location/${findWoeid.woeid}/`;
         const fetchWeatherWoeid = await fetch(API_URL_WOEID);
         const weatherData = await fetchWeatherWoeid.json()
