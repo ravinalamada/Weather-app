@@ -1,21 +1,9 @@
-
 .form {
   margin-top: 82px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-}
-
-.search--city {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  overflow: auto;
-  padding-left: 18px;
-  padding-right: 18px;
-  padding-bottom: 30px;
-  margin-bottom: 40px;
 }
 
 .form--container {
@@ -26,32 +14,41 @@
 }
 
 .form__input {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: inherit;
   width: auto;
+  height: 44px;
   text-align: center;
   outline: 2px solid transparent;
   outline-offset: 2px;
-  --tw-text-opacity: 1;
-  color: rgba(231,231,235,var(--tw-text-opacity));
-  border: 2px rgba(160,159,177,var(--tw-border-opacity));
+  --opacity: 1;
+  color: rgba(231, 231, 235, var(--opacity));
+  border: 2px rgba(160, 159, 177, var(--tw-border-opacity));
+  background-color: rgba(30, 33, 58, var(--opacity));
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-width: 2px;
+  --opacity: 1;
+  border-color: rgba(160, 159, 177, var(--opacity));
+  border-style: solid;
 }
 
-.form__input,
-.btn--seacrh--city {
-  border: 1px solid #E7E7EB;
+/* .form__input {
+  border: 1px solid #e7e7eb;
   box-sizing: border-box;
   padding-top: 14px;
   padding-bottom: 15px;
   color: #616475;
-  background-color: transparent;
   height: 44px;
-}
+} */
 
 .form__btn {
   font-family: sans-serif;
-  background: #3C47E9;
+  background: #3c47e9;
   font-size: 16px;
   line-height: 24px;
-  color: #E7E7EB;
+  color: #e7e7eb;
   font-weight: 500;
   text-transform: capitalize;
   height: 44px;
@@ -61,7 +58,7 @@
 .close--pannel {
   background-color: transparent;
   text-align: right;
-  color: #E7E7EB;
+  color: #e7e7eb;
   font-size: 18px;
   line-height: 17px;
   width: 100%;
@@ -80,13 +77,29 @@
 }
 
 .btn--seacrh--city {
-  margin-top: 58px;
+  font-size: 16px;
+  line-height: 24px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
   text-align: left;
   padding-left: 12px;
+  --tw-text-opacity: 1;
+  color: rgba(231, 231, 235, var(--tw-text-opacity));
+  padding: 1rem;
+  margin-top: 4rem;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  border: none;
+  background-color: transparent;
+}
+
+.btn--seacrh--city:hover {
+  border: 1px solid;
+  --tw-border-opacity: 1;
+  border-color: rgba(231, 231, 235, var(--tw-border-opacity));
 }
 
 @media (min-width: 1125px) {
-
   .btn--seacrh--city {
     width: 100%;
   }
@@ -94,7 +107,4 @@
   .search--city {
     position: unset;
   }
-
 }
-
-

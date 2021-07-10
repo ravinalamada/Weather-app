@@ -1,18 +1,12 @@
-import React, {useContext} from 'react';
-import WeatherToday from '../components/weatherToday';
-import Weather from '../components/weather';
-import Header from '../components/Header';
-import { Context } from '../GlobalContextProvider';
+import React from 'react'
+import WeatherToday from '../components/weatherToday'
+import Weather from '../components/weather'
 
 function App() {
-
-  const {isClicked} = useContext(Context);
-
   return (
-    <article className="App">
-        <WeatherToday />
-
-        <Weather />
+    <article className='App'>
+      <WeatherToday />
+      <Weather />
     </article>
   )
 }

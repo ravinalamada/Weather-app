@@ -11,16 +11,15 @@
   position: relative;
 }
 
-@media (min-width: 1125px) {
+@media (min-width: 1000px) {
+  .weatherToday--container {
+    width: 25%;
+    position: fixed;
+  }
 
-  .App--container {
-    display: grid;
-    grid-template-columns: 25% 1fr;
-    column-gap: 100px;
+  .weather--container {
+    width: 75%;
+    left: 25%;
+    position: absolute;
   }
 }
-
-
-
-
-

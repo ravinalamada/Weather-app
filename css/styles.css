@@ -3,7 +3,6 @@
 @import './App.css';
 @import './form.css';
 @import './weatherToday.css';
-@import './weekday-weather.css';
 @import './weather-highlighted.css';
 @import './weather.css';
-
+@import './loadingStyle.css';
