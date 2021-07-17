@@ -1,8 +1,8 @@
 .App--wrapper {
   background: hsl(234, 32%, 17%);
   margin-top: -0.5rem;
-  position: relative;
-  width: 100%;
+  /* position: relative;
+  width: 100%; */
 }
 
 .weather--container,
@@ -11,7 +11,7 @@
   position: relative;
 }
 
-@media(min-width: 1000px) {
+@media (min-width: 1000px) {
   .weatherToday--container {
     width: 25%;
     position: fixed;
