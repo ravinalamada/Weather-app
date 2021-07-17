@@ -117,7 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+})({"../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -149,7 +149,7 @@ function getBaseURL(url) {
 
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
-},{}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+},{}],"../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
 var bundle = require('./bundle-url');
 
 function updateLink(link) {
@@ -184,52 +184,52 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"css/default.css":[function(require,module,exports) {
+},{"./bundle-url":"../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"css/default.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/header.css":[function(require,module,exports) {
+},{"_css_loader":"../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/header.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/App.css":[function(require,module,exports) {
+},{"_css_loader":"../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/App.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/form.css":[function(require,module,exports) {
+},{"_css_loader":"../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/form.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/weatherToday.css":[function(require,module,exports) {
+},{"_css_loader":"../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/weatherToday.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./..\\images\\Cloud-background.png":[["Cloud-background.d8d8ce62.png","images/Cloud-background.png"],"images/Cloud-background.png"],"_css_loader":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/weekday-weather.css":[function(require,module,exports) {
+},{"./../images/Cloud-background.png":[["Cloud-background.d8d8ce62.png","images/Cloud-background.png"],"images/Cloud-background.png"],"_css_loader":"../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/weather-highlighted.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/weather-highlighted.css":[function(require,module,exports) {
+},{"_css_loader":"../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/weather.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/weather.css":[function(require,module,exports) {
+},{"_css_loader":"../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/loadingStyle.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/styles.css":[function(require,module,exports) {
+},{"_css_loader":"../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"css/styles.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./default.css":"css/default.css","./header.css":"css/header.css","./App.css":"css/App.css","./form.css":"css/form.css","./weatherToday.css":"css/weatherToday.css","./weekday-weather.css":"css/weekday-weather.css","./weather-highlighted.css":"css/weather-highlighted.css","./weather.css":"css/weather.css","_css_loader":"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./default.css":"css/default.css","./header.css":"css/header.css","./App.css":"css/App.css","./form.css":"css/form.css","./weatherToday.css":"css/weatherToday.css","./weather-highlighted.css":"css/weather-highlighted.css","./weather.css":"css/weather.css","./loadingStyle.css":"css/loadingStyle.css","_css_loader":"../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -257,7 +257,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58244" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45389" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -433,5 +433,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+},{}]},{},["../../../../../../usr/local/share/.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
 //# sourceMappingURL=/styles.b61e60ae.js.map
