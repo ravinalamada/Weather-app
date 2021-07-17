@@ -1,8 +1,8 @@
 .App--wrapper {
   background: hsl(234, 32%, 17%);
   margin-top: -0.5rem;
-  /* position: relative;
-  width: 100%; */
+  position: relative;
+  width: 100%;
 }
 
 .weather--container,
