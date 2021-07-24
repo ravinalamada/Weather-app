@@ -1,51 +1,62 @@
-import React, {useState, useEffect, createContext} from 'react';
-
-const Context = createContext();
+import React, { useState, useEffect, createContext } from 'react'
+const Context = createContext()
 
 // cors API
-const CORS_API = 'https://cors-anywhere.herokuapp.com/';
+const CORS_API = 'https://cors-anywhere.herokuapp.com/'
 
 // This will provide data to all the consumer
-function GlobalContextProvider({children}) {
-  const [location, setLocation] = useState('london');// Default location
+function GlobalContextProvider({ children }) {
+  const [location, setLocation] = useState('') // Default location
   const [query, setQuery] = useState([])
-  const [woeid, setWoeid] = useState({}); // Default woeid
-  const [isLoading, setIsLoading] = useState(true); // Loading the page
-  const [isClicked, setIsClicked] = useState(false);
-  const [isCeluis, setIsCeluis] = useState(false);
+  const [woeid, setWoeid] = useState('44418') // Default woeid
+  const [isLoading, setIsLoading] = useState(true) // Loading the page
+  const [isClicked, setIsClicked] = useState(false)
+  const [isCeluis, setIsCeluis] = useState(false)
 
   // Fetch the weather data
+  async function getWeatherFromWoeid() {
+    const API_URL_WOEID = `${CORS_API}https://www.metaweather.com/api/location/${woeid}/`
+    const fetchWeatherWoeid = await fetch(API_URL_WOEID)
+    const weatherData = await fetchWeatherWoeid.json()
+    setIsLoading(false)
+    setWoeid(weatherData)
+  }
+
   async function getWeather() {
-
     // Fetch weather location
-    const API_URL_LOC = `${CORS_API}https://www.metaweather.com/api/location/search/?query=${location}`
-      const fetchWeatherLocData = await fetch(API_URL_LOC);
-      const data = await fetchWeatherLocData.json()
-      setQuery(data)
-
-      // Check if there something inside of the data location
-      if(data.length) {
-        const findWoeid = data.find(data => data.woeid)
-        setIsLoading(false);
-        const API_URL_WOEID = `${CORS_API}https://www.metaweather.com/api/location/${findWoeid.woeid}/`;
-        const fetchWeatherWoeid = await fetch(API_URL_WOEID);
-        const weatherData = await fetchWeatherWoeid.json()
-        setWoeid(weatherData)
-      }
+    const API_URL_LOC = `${CORS_API}https://www.metaweather.com/api/location/search/?query=${
+      location ? location : null
+    }`
+    const fetchWeatherLocData = await fetch(API_URL_LOC)
+    const data = await fetchWeatherLocData.json()
+    setQuery(data)
+    // Check if there something inside of the data location
+    if (data.length) {
+      const findWoeid = data.find((data) => data.woeid)
+      setIsLoading(false)
+      const API_URL_WOEID = `${CORS_API}https://www.metaweather.com/api/location/${findWoeid?.woeid}/`
+      const fetchWeatherWoeid = await fetch(API_URL_WOEID)
+      const weatherData = await fetchWeatherWoeid.json()
+      setWoeid(weatherData)
+    }
   }
 
   // get the data
   useEffect(() => {
     setTimeout(() => {
-      getWeather()
+      getWeatherFromWoeid()
     }, 500)
+  }, [])
+
+  useEffect(() => {
+    getWeather()
   }, [location])
 
-  // Submit the data
+  // // Submit the data
   function submitWeather(e) {
-    e.preventDefault();
-    getWeather();
-    setIsClicked(false);
+    e.preventDefault()
+    getWeather()
+    setIsClicked(false)
   }
 
   // Show the pannel
@@ -53,32 +64,34 @@ function GlobalContextProvider({children}) {
     setIsClicked(true)
   }
 
-     // Toggle the units
-     function convertUnitCeluisIntoFar(){
-      setIsCeluis(true)
-    }
+  // Toggle the units
+  function convertUnitCeluisIntoFar() {
+    setIsCeluis(true)
+  }
 
-    function convertFarUnitIntoCeluis() {
-      setIsCeluis(false)
-    }
+  function convertFarUnitIntoCeluis() {
+    setIsCeluis(false)
+  }
 
   return (
-    <Context.Provider value={{
-      location,
-      woeid,
-      isLoading,
-      isClicked,
-      isCeluis,
-      query,
-      convertFarUnitIntoCeluis,
-      convertUnitCeluisIntoFar,
-      submitWeather,
-      setLocation,
-      handleClick,
-    }}>
-       {children}
+    <Context.Provider
+      value={{
+        location,
+        woeid,
+        isLoading,
+        isClicked,
+        isCeluis,
+        query,
+        weathersData: woeid.consolidated_weather,
+        convertFarUnitIntoCeluis,
+        convertUnitCeluisIntoFar,
+        submitWeather,
+        setLocation,
+        handleClick,
+      }}>
+      {children}
     </Context.Provider>
   )
 }
 
-export{ GlobalContextProvider, Context}
+export { GlobalContextProvider, Context }

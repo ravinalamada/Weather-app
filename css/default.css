@@ -1,6 +1,6 @@
 body {
   background-color: #020826;
-  color: #E7E7EB;
+  color: #e7e7eb;
   font-family: Raleway;
   font-style: normal;
   font-size: 16px;
@@ -14,17 +14,19 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 * {
-  --tw-ring-inset: var(--tw-empty,/*!*/ /*!*/);
+  --tw-ring-inset: var(--tw-empty, /*!*/ /*!*/);
   --tw-ring-offset-width: 0px;
   --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgba(59,130,246,0.5);
+  --tw-ring-color: rgba(59, 130, 246, 0.5);
   --tw-ring-offset-shadow: 0 0 transparent;
   --tw-ring-shadow: 0 0 transparent;
 }
 * {
   --tw-shadow: 0 0 transparent;
 }
-*, :after, :before {
+*,
+:after,
+:before {
   box-sizing: border-box;
   border-width: 0;
   border-style: solid;
@@ -51,4 +53,8 @@ img {
   max-width: 100%;
   height: auto;
   border-style: solid;
+}
+
+a {
+  text-decoration: none;
 }

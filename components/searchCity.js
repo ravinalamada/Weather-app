@@ -34,7 +34,7 @@ function searchCity() {
         {isShowedCity &&
           query?.map((loc) => (
             <button
-              key={loc.title}
+              key={loc.woeid}
               onClick={() => {
                 setLocation(loc.title)
                 submitWeather()

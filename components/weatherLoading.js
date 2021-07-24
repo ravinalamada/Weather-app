@@ -9,7 +9,7 @@ function weatherLoading() {
     <>
       {isLoading && (
         <div className='loading--wrapper'>
-          <div class='lds-ring'>
+          <div className='lds-ring'>
             <div></div>
             <div></div>
             <div></div>
