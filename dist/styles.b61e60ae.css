@@ -60,7 +60,7 @@ a {
 }
 
 .header {
-  padding-top: 1.25rem;
+  padding-top: 42px;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   display: flex;
@@ -72,19 +72,19 @@ a {
 .header__btn,
 .header__btn--search {
   --opacity: 1;
-  background-color: rgba(136,134,157,var(--opacity));
+  background-color: rgba(136, 134, 157, var(--opacity));
   cursor: pointer;
   text-align: center;
   border-color: transparent;
 }
 
 .header__btn--search {
-  border-radius: .125rem;
+  border-radius: 0.125rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
-  color: rgba(231,231,235,var(--opacity));
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  color: rgba(231, 231, 235, var(--opacity));
   font-size: inherit;
   font-family: inherit;
   line-height: 24px;

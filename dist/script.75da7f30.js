@@ -33685,7 +33685,8 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 const Context = (0, _react.createContext)(); // cors API
 
 exports.Context = Context;
-const CORS_API = 'https://cors-anywhere.herokuapp.com/'; // This will provide data to all the consumer
+const CORS_API = 'https://cors-anywhere.herokuapp.com/';
+const API_URL_LOC = `${CORS_API}https://www.metaweather.com/api/location/`; // This will provide data to all the consumer
 
 function GlobalContextProvider({
   children
@@ -33698,42 +33699,55 @@ function GlobalContextProvider({
   const [isLoading, setIsLoading] = (0, _react.useState)(true); // Loading the page
 
   const [isClicked, setIsClicked] = (0, _react.useState)(false);
-  const [isCeluis, setIsCeluis] = (0, _react.useState)(false); // Fetch the weather data
+  const [isCeluis, setIsCeluis] = (0, _react.useState)(false);
+  const [lat, setLat] = (0, _react.useState)([]);
+  const [long, setLong] = (0, _react.useState)([]);
+  const [nearestLoc, setNearestData] = (0, _react.useState)([]);
+  const [isNearestLoc, setIsNearestLoc] = (0, _react.useState)(false); // Fetch the weather data
 
   async function getWeatherFromWoeid() {
-    const API_URL_WOEID = `${CORS_API}https://www.metaweather.com/api/location/${woeid}/`;
+    const API_URL_WOEID = `${API_URL_LOC}${woeid}/`;
     const fetchWeatherWoeid = await fetch(API_URL_WOEID);
     const weatherData = await fetchWeatherWoeid.json();
     setIsLoading(false);
+    setIsNearestLoc(false);
     setWoeid(weatherData);
   }
 
   async function getWeather() {
-    // Fetch weather location
-    const API_URL_LOC = `${CORS_API}https://www.metaweather.com/api/location/search/?query=${location ? location : null}`;
-    const fetchWeatherLocData = await fetch(API_URL_LOC);
+    setIsNearestLoc(false); // Fetch weather location
+
+    const fetchWeatherLocData = await fetch(`${API_URL_LOC}search/?query=${location ? location : null}`);
     const data = await fetchWeatherLocData.json();
     setQuery(data); // Check if there something inside of the data location
 
     if (data.length) {
       const findWoeid = data.find(data => data.woeid);
       setIsLoading(false);
-      const API_URL_WOEID = `${CORS_API}https://www.metaweather.com/api/location/${findWoeid === null || findWoeid === void 0 ? void 0 : findWoeid.woeid}/`;
+      const API_URL_WOEID = `${API_URL_LOC}${findWoeid === null || findWoeid === void 0 ? void 0 : findWoeid.woeid}/`;
       const fetchWeatherWoeid = await fetch(API_URL_WOEID);
       const weatherData = await fetchWeatherWoeid.json();
       setWoeid(weatherData);
     }
-  } // get the data
+  }
+
+  const fetchNearestLoc = async () => {
+    setIsNearestLoc(true);
+    navigator.geolocation.getCurrentPosition(function (position) {
+      setLat(position.coords.latitude);
+      setLong(position.coords.longitude);
+    });
+    setIsLoading(false);
+    await fetch(`${API_URL_LOC}search/?lattlong=${lat},${long}`).then(res => res.json()).then(result => {
+      setNearestData(result);
+    });
+  }; // get the data
 
 
   (0, _react.useEffect)(() => {
-    setTimeout(() => {
-      getWeatherFromWoeid();
-    }, 500);
-  }, []);
-  (0, _react.useEffect)(() => {
-    getWeather();
-  }, [location]); // // Submit the data
+    location ? getWeather() : getWeatherFromWoeid();
+    isNearestLoc && fetchNearestLoc();
+  }, [location, lat, long]); // // Submit the data
 
   function submitWeather(e) {
     e.preventDefault();
@@ -33763,10 +33777,14 @@ function GlobalContextProvider({
       isClicked,
       isCeluis,
       query,
+      nearestLoc,
       weathersData: woeid.consolidated_weather,
+      nearestLoc,
+      isNearestLoc,
       convertFarUnitIntoCeluis,
       convertUnitCeluisIntoFar,
       submitWeather,
+      fetchNearestLoc,
       setLocation,
       handleClick
     }
@@ -33854,7 +33872,8 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function Header() {
   const {
-    handleClick
+    handleClick,
+    fetchNearestLoc
   } = (0, _react.useContext)(_GlobalContextProvider.Context);
   return /*#__PURE__*/_react.default.createElement("header", {
     className: "header"
@@ -33862,7 +33881,8 @@ function Header() {
     className: "header__btn--search",
     onClick: handleClick
   }, "Search for places"), /*#__PURE__*/_react.default.createElement("button", {
-    className: "header__btn"
+    className: "header__btn",
+    onClick: fetchNearestLoc
   }, /*#__PURE__*/_react.default.createElement("svg", {
     stroke: "#E7E7EB",
     fill: "#E7E7EB",
@@ -33903,10 +33923,14 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function weather() {
+  var _nearestLoc$;
+
   const {
     woeid,
     isLoading,
-    isCeluis
+    isCeluis,
+    nearestLoc,
+    isNearestLoc
   } = (0, _react.useContext)(_GlobalContextProvider.Context); // Get the weather today and its detail
 
   const weatherToday = !isLoading && woeid && woeid.consolidated_weather && woeid.consolidated_weather[0];
@@ -33940,7 +33964,7 @@ function weather() {
     className: "title--wrapper"
   }, /*#__PURE__*/_react.default.createElement("p", {
     className: "heading3 weather--city"
-  }, woeid.title), /*#__PURE__*/_react.default.createElement("svg", {
+  }, isNearestLoc ? (_nearestLoc$ = nearestLoc[0]) === null || _nearestLoc$ === void 0 ? void 0 : _nearestLoc$.title : woeid === null || woeid === void 0 ? void 0 : woeid.title), /*#__PURE__*/_react.default.createElement("svg", {
     xmlns: "http://www.w3.org/2000/svg",
     height: "24",
     viewBox: "0 0 24 24",
@@ -34370,7 +34394,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37013" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44195" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

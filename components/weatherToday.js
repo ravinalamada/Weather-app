@@ -5,7 +5,8 @@ import Header from './Header'
 import { Link } from 'react-router-dom'
 
 function weather() {
-  const { woeid, isLoading, isCeluis } = useContext(Context)
+  const { woeid, isLoading, isCeluis, nearestLoc, isNearestLoc } =
+    useContext(Context)
 
   // Get the weather today and its detail
   const weatherToday =
@@ -58,7 +59,9 @@ function weather() {
                   <p>{dateToday}</p>
                 </div>
                 <div className='title--wrapper'>
-                  <p className='heading3 weather--city'>{woeid.title}</p>
+                  <p className='heading3 weather--city'>
+                    {isNearestLoc ? nearestLoc[0]?.title : woeid?.title}
+                  </p>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     height='24'
